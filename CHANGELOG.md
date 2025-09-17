@@ -12,8 +12,10 @@ and this project adheres to
 
 ### Added
 
-- New `/download-attachment` command for downloading web content and files to Obsidian attachments folder
-- New `/pull-request` command for creating PRs with intelligent change analysis and description generation
+- New `/download-attachment` command for downloading web content and files to
+  Obsidian attachments folder
+- New `/pull-request` command for creating PRs with intelligent change analysis
+  and description generation
 - Both commands integrate seamlessly with Obsidian's vault structure
 
 ### Fixed
