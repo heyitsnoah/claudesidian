@@ -29,7 +29,35 @@ capabilities.
 ### 1. **Version Check & Setup**
 
 - Get current version from package.json
-- Create timestamped backup in `.backup/upgrade-YYYY-MM-DD-HHMMSS/`
+- Check if already on latest version:
+
+  ```bash
+  CURRENT=$(grep '"version"' package.json | sed 's/.*: "\(.*\)".*/\1/')
+  LATEST=$(curl -s https://raw.githubusercontent.com/heyitsnoah/claudesidian/main/package.json | grep '"version"' | sed 's/.*: "\(.*\)".*/\1/')
+
+  if [ "$CURRENT" = "$LATEST" ]; then
+    echo "✅ You're already on the latest version ($CURRENT)"
+    exit 0
+  fi
+  ```
+
+- Create timestamped backup in `.backup/upgrade-YYYY-MM-DD-HHMMSS/`:
+
+  ```bash
+  # Create backup directory
+  BACKUP_DIR=".backup/upgrade-$(date +%Y-%m-%d-%H%M%S)"
+  mkdir -p "$BACKUP_DIR"
+
+  # Copy all important files to backup
+  cp -r .claude "$BACKUP_DIR/"
+  cp -r .scripts "$BACKUP_DIR/"
+  cp package.json "$BACKUP_DIR/"
+  cp CHANGELOG.md "$BACKUP_DIR/" 2>/dev/null || true
+  cp README.md "$BACKUP_DIR/" 2>/dev/null || true
+
+  echo "✅ Backup created in $BACKUP_DIR"
+  ```
+
 - Clone latest claudesidian to temp directory (doesn't affect user's repo):
   ```bash
   # Get fresh copy in .tmp dir (hidden from Obsidian) - user's repo stays disconnected
@@ -40,12 +68,21 @@ capabilities.
 ### 2. **Create Upgrade Checklist**
 
 - Compare system files between current directory and .tmp/claudesidian-upgrade/:
+
   ```bash
-  # Find all system files that differ
+  # Find all system files that differ AND new files in upstream
+  # First, find files that exist in both but differ
   diff -qr . .tmp/claudesidian-upgrade/ --include="*.md" --include="*.sh" --include="*.json" |
   grep -E '(\.claude/|\.scripts/|package\.json|CHANGELOG\.md|README\.md)' |
   grep -v '(00_|01_|02_|03_|04_|05_|06_|\.obsidian|CLAUDE\.md)'
+
+  # Also find NEW files in upstream (like new commands)
+  find .tmp/claudesidian-upgrade/.claude/commands -name "*.md" | while read f; do
+    local_file=${f#.tmp/claudesidian-upgrade/}
+    [ ! -f "$local_file" ] && echo "NEW: $local_file"
+  done
   ```
+
 - Create checklist of files that need review
 - Explicitly EXCLUDE:
   - User content folders (00_Inbox, 01_Projects, etc.)
@@ -76,10 +113,13 @@ capabilities.
 
 **⚠️ CRITICAL IMPLEMENTATION REQUIREMENT:**
 
-- **NEVER blindly overwrite files with `cat > file` or `cp`**
+- **NEVER blindly overwrite files without showing diffs first**
 - **ALWAYS show diffs to the user first**
 - **ALWAYS ask for confirmation before replacing files**
 - **Skipping these steps can lose user customizations!**
+- **NEVER use `cp` or `cp -f` (both can cause prompts on protected files)**
+- **ALWAYS USE `cat source > dest` for guaranteed non-interactive replacement**
+- **WAIT for actual user input - don't automatically choose option 1**
 
 For EACH file in the checklist:
 
@@ -103,10 +143,28 @@ For EACH file in the checklist:
       3. View diff and decide
       4. Try to merge both (AI-assisted)
 
-      Choice (1/2/3/4): _
+      Choice (1/2/3/4): [WAIT FOR USER TO TYPE NUMBER AND PRESS ENTER]
       ```
 
-4.  Apply the chosen strategy
+      **IMPORTANT**: Actually WAIT for the user to type their choice! Do NOT
+      automatically select any option. The user must manually type 1, 2, 3, or 4
+      and press Enter.
+
+4.  Apply the chosen strategy:
+    - **For option 1 (Apply update/Take upstream)**:
+      ```bash
+      # IMPORTANT: Check if file exists first, then use cat with redirection
+      if [ -f ".tmp/claudesidian-upgrade/path/to/file" ]; then
+        cat .tmp/claudesidian-upgrade/path/to/file > path/to/file && echo "✅ Updated"
+      else
+        echo "⚠️ File not found in upstream - keeping local version"
+      fi
+      ```
+    - **For option 2 (Keep your version)**:
+      ```bash
+      echo "✅ Kept your version"
+      ```
+    - **For option 4 (AI merge)**: Read both files and create merged version
 5.  **CRITICAL: Update the checklist file immediately**:
     ```markdown
     [ ] .claude/commands/init-bootstrap.md → becomes → [x]
@@ -121,6 +179,32 @@ For EACH file in the checklist:
   `.scripts/*`
 - **Needs review**: `package.json` (preserve user's custom scripts)
 - **Never touch**: User content folders, CLAUDE.md, API configs
+
+#### Batch Updates for Similar Files
+
+For commands that have only formatting changes, you can batch update:
+
+```bash
+# Batch update multiple command files with same type of changes
+for file in thinking-partner.md daily-review.md inbox-processor.md; do
+  if [ -f ".tmp/claudesidian-upgrade/.claude/commands/$file" ]; then
+    cat ".tmp/claudesidian-upgrade/.claude/commands/$file" > ".claude/commands/$file"
+    echo "✅ Updated $file"
+  fi
+done
+```
+
+#### Handling Missing Upstream Files
+
+Some files may exist locally but not in upstream (like deprecated agents):
+
+```bash
+# Check if file exists in upstream before trying to update
+if [ ! -f ".tmp/claudesidian-upgrade/$filepath" ]; then
+  echo "⚠️ $filepath not in upstream - keeping local version"
+  # Mark as skipped in checklist: [-]
+fi
+```
 
 ### 5. **Progress Tracking**
 
