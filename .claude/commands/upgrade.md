@@ -1,11 +1,8 @@
 ---
 name: upgrade
-description:
-  Intelligently upgrade claudesidian with new features while preserving user
-  customizations using AI-powered semantic analysis
+description: Intelligently upgrade claudesidian with new features while preserving user customizations using AI-powered semantic analysis
 allowed-tools: [Read, Write, Edit, MultiEdit, Bash, WebFetch, Grep, Glob]
-argument-hint:
-  "(optional) 'check' to preview changes, 'force' to skip confirmations"
+argument-hint: "(optional) 'check' to preview changes, 'force' to skip confirmations"
 ---
 
 # Smart Upgrade Command

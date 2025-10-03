@@ -1,6 +1,5 @@
 ---
-description:
-  Add or update YAML frontmatter properties to enhance note organization
+description: Add YAML frontmatter for organization - suggest when moving content from inbox to organized folders
 argument-hint: [file or folder path]
 allowed-tools: Read, Write, Edit, Glob
 ---
@@ -9,7 +8,6 @@ You will analyze Obsidian notes and add intelligent YAML frontmatter properties
 to enhance organization and discoverability.
 
 ## Input
-
 - Path: ${1} (file or folder to process)
 - Current date: !`date +%Y-%m-%d`
 
@@ -46,12 +44,12 @@ For each note, examine:
 title: [Descriptive meeting title]
 date: YYYY-MM-DD
 type: meeting
-attendees: ['Person 1', 'Person 2']
+attendees: ["Person 1", "Person 2"]
 project: Project Name
 tags: [meeting, project-name]
 action_items:
-  - 'Action item 1'
-  - 'Action item 2'
+  - "Action item 1"
+  - "Action item 2"
 status: complete
 ---
 ```
@@ -65,7 +63,7 @@ date: YYYY-MM-DD
 type: daily-note
 tags: [daily]
 highlights:
-  - 'Key event or thought'
+  - "Key event or thought"
 mood: productive
 ---
 ```
@@ -92,7 +90,7 @@ title: [Project Name - Component]
 type: project
 status: in-progress
 deadline: YYYY-MM-DD
-stakeholders: ['Person 1', 'Team 2']
+stakeholders: ["Person 1", "Team 2"]
 tags: [project, area]
 priority: high
 ---
@@ -116,10 +114,11 @@ For each note:
 # Format:
 ---
 property: value
-list_property: ['item1', 'item2']
+list_property: ["item1", "item2"]
 date_property: YYYY-MM-DD
-linked_property: '[[Note Name]]'
+linked_property: "[[Note Name]]"
 ---
+
 [Original content]
 ```
 
@@ -187,7 +186,7 @@ Had a great meeting with the team about Q1 planning...
 title: Q1 Planning Team Meeting
 date: 2025-09-02
 type: meeting
-attendees: ['Team']
+attendees: ["Team"]
 project: Q1 Planning
 tags: [meeting, planning, q1-2025]
 status: complete

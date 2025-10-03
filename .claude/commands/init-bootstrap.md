@@ -1,8 +1,6 @@
 ---
 name: init-bootstrap
-description:
-  Interactive setup wizard that helps new users create a personalized CLAUDE.md
-  file based on their Obsidian workflow preferences
+description: Interactive setup wizard that helps new users create a personalized CLAUDE.md file based on their Obsidian workflow preferences
 allowed-tools: [Read, Write, MultiEdit, Bash, Task]
 argument-hint: "(optional) path to existing vault or 'new' for fresh setup"
 ---

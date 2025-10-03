@@ -24,3 +24,7 @@ build/
 
 # Ignore git
 .git/
+
+# Preserve command and agent descriptions formatting
+.claude/commands/*.md
+.claude/agents/*.md

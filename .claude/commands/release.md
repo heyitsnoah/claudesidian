@@ -1,11 +1,8 @@
 ---
 name: release
-description:
-  Automatically bump version, update changelog, commit, tag, and push a new
-  release based on recent changes
+description: Automatically bump version, update changelog, commit, tag, and push a new release based on recent changes
 allowed-tools: [Read, Write, Edit, MultiEdit, Bash, Grep]
-argument-hint:
-  "(optional) 'major', 'minor', 'patch', or leave blank for auto-detection"
+argument-hint: "(optional) 'major', 'minor', 'patch', or leave blank for auto-detection"
 ---
 
 # Release Command
