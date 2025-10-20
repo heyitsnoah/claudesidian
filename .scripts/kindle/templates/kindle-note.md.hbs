@@ -1,0 +1,26 @@
+---
+title: "{{title}}"
+author: "{{#if author}}{{author}}{{else}}Unknown{{/if}}"
+asin: {{bookId}}
+highlights: {{highlights.length}}
+lastSynced: {{extractedAt}}
+---
+
+# {{title}}
+
+{{#if meta.truncatedByCopyright}}
+
+> ⚠️ Some highlights were truncated due to publisher export limits.
+{{/if}}
+
+## Highlights
+
+{{#each highlights}}
+{{text}}{{#if location}} - loc: [{{location}}]({{kindleLink ../bookId location}}){{/if}}
+
+{{#if note}}
+***Note:*** {{{decode note}}}
+{{/if}}
+
+---
+{{/each}}

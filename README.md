@@ -155,6 +155,10 @@ Pre-configured AI assistants ready to use:
 - `install-claudesidian-command` - Install shell command to launch vault from
   anywhere
 
+**Kindle Integration:**
+
+- `kindle-sync` - Sync your Kindle highlights (interactive: choose 10, 25, 50, or all books)
+
 Run with: `/[command-name]` in Claude Code
 
 ### Staying Updated with `/upgrade`
@@ -252,6 +256,59 @@ npm run firecrawl:batch -- urls.txt "03_Resources/Research"
 3. Go to your dashboard to find your API key
 4. Copy the key (format: `fc-xxxxx...`)
 5. Set it in your environment: `export FIRECRAWL_API_KEY="fc-your-key-here"`
+
+## Kindle Highlights Sync
+
+Automatically sync your Kindle highlights to your vault with zero configuration.
+On first run, you'll choose where to save highlights (defaults to
+`03_Resources/Kindle Highlights`), then the integration handles everything else:
+
+- **Interactive sync**: Choose how many books to sync (10, 25, 50, or all)
+- **Smart authentication**: Browser opens automatically when needed
+- **Formatted notes**: Each book becomes a Markdown file with YAML frontmatter,
+  tags, and Kindle app deep links
+- **Auto-retry**: If authentication expires mid-sync, automatically re-authenticates
+
+**Quick Start:**
+
+```bash
+# In Claude Code, run:
+/kindle-sync
+
+# You'll be prompted to choose:
+# - Default (10): Quick sync of 10 most recent books
+# - Custom number: Any amount (e.g., 25, 50)
+# - All: Complete library (takes 10-30 minutes for large libraries)
+
+# First time only:
+# 1. Choose output folder (or press Enter for default)
+# 2. Browser opens for Amazon login
+# 3. Syncs your selected books
+```
+
+**What you get:**
+
+Each book creates a note with:
+
+- YAML frontmatter (title, author, ASIN, tags, sync date)
+- All highlights with locations and your notes
+- Kindle app deep links to open specific passages in Kindle app
+- Formatted with your custom template (`.scripts/kindle/templates/`)
+
+**Changing settings:**
+
+All settings are saved to `.kindle/config.json`. To change where highlights are
+saved or other options:
+
+1. **Edit directly**: Open `.kindle/config.json` and change `outputFolder` or
+   other settings
+2. **Reset setup**: Delete `.kindle/config.json` to trigger the first-run folder
+   prompt again
+3. **One-time override**: Run with `--output` flag to save to a different folder
+   just once
+
+See `/kindle-sync` command documentation for full details on all configuration
+options.
 
 ## Helper Scripts
 

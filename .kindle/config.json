@@ -1,0 +1,13 @@
+{
+  "outputFolder": "02_Areas/Test",
+  "templatePath": ".scripts/kindle/templates/kindle-note.md.hbs",
+  "overwrite": false,
+  "addTags": [
+    "kindle",
+    "highlights",
+    "books"
+  ],
+  "createIndex": true,
+  "indexPath": "03_Resources/Kindle Highlights Index.md",
+  "lastSync": "2025-10-20T03:00:43.737Z"
+}

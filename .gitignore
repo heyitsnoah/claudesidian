@@ -31,3 +31,6 @@ pnpm-lock.yaml
 
 # Never commit real API keys
 *_API_KEY
+
+# Kindle Auth Directory
+.kindle/auth/
