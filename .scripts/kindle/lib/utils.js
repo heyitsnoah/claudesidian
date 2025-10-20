@@ -1,10 +1,10 @@
-import { createHash } from 'node:crypto';
+import { createHash } from 'node:crypto'
 
 /**
  * Sanitize a string for use in filenames by replacing invalid characters
  */
 export function fileSafe(input) {
-  return input.replace(/[\\/:*?"<>|]/g, '_').trim();
+  return input.replace(/[\\/:*?"<>|]/g, '_').trim()
 }
 
 /**
@@ -12,8 +12,8 @@ export function fileSafe(input) {
  * Uses text + location to ensure stability across exports
  */
 export function generateHighlightId(text, location) {
-  const content = location ? `${text}::${location}` : text;
-  return createHash('sha256').update(content).digest('hex').slice(0, 16);
+  const content = location ? `${text}::${location}` : text
+  return createHash('sha256').update(content).digest('hex').slice(0, 16)
 }
 
 /**
@@ -21,9 +21,9 @@ export function generateHighlightId(text, location) {
  * Falls back to slugified title if ASIN not found
  */
 export function extractBookId(url, title) {
-  const asinMatch = /[?&]asin=([^&]+)/.exec(url);
+  const asinMatch = /[?&]asin=([^&]+)/.exec(url)
   if (asinMatch?.[1]) {
-    return asinMatch[1];
+    return asinMatch[1]
   }
 
   // Fallback: slugify title
@@ -33,7 +33,7 @@ export function extractBookId(url, title) {
     .replace(/[^\w\s-]/g, '')
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
-    .slice(0, 50); // Reasonable length limit
+    .slice(0, 50) // Reasonable length limit
 }
 
 /**
@@ -41,20 +41,30 @@ export function extractBookId(url, title) {
  */
 export function formatDate(date) {
   if (typeof date === 'string') {
-    date = new Date(date);
+    date = new Date(date)
   }
-  return date.toISOString().split('T')[0];
+  return date.toISOString().split('T')[0]
+}
+
+/**
+ * Extract author's last name from full author name
+ */
+function extractLastName(author) {
+  if (!author) return 'Unknown'
+  const parts = author.trim().split(/\s+/)
+  return parts[parts.length - 1] || 'Unknown'
 }
 
 /**
  * Create a safe filename from book title and author
  */
-export function createBookFilename(title, author, asin) {
-  const safeTitle = fileSafe(title);
-  const safeAuthor = author ? fileSafe(author) : '';
+export function createBookFilename(title, author) {
+  const safeTitle = fileSafe(title)
 
-  if (safeAuthor) {
-    return `${safeTitle} - ${safeAuthor}.md`;
+  if (author) {
+    const lastName = extractLastName(author)
+    const safeLastName = fileSafe(lastName)
+    return `${safeLastName} - ${safeTitle}.md`
   }
-  return `${safeTitle}.md`;
+  return `${safeTitle}.md`
 }

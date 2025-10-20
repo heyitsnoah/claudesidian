@@ -157,7 +157,8 @@ Pre-configured AI assistants ready to use:
 
 **Kindle Integration:**
 
-- `kindle-sync` - Sync your Kindle highlights (interactive: choose 10, 25, 50, or all books)
+- `kindle-sync` - Sync your Kindle highlights (interactive: choose 10, 25, 50,
+  or all books)
 
 Run with: `/[command-name]` in Claude Code
 
@@ -267,7 +268,8 @@ On first run, you'll choose where to save highlights (defaults to
 - **Smart authentication**: Browser opens automatically when needed
 - **Formatted notes**: Each book becomes a Markdown file with YAML frontmatter,
   tags, and Kindle app deep links
-- **Auto-retry**: If authentication expires mid-sync, automatically re-authenticates
+- **Auto-retry**: If authentication expires mid-sync, automatically
+  re-authenticates
 
 **Quick Start:**
 

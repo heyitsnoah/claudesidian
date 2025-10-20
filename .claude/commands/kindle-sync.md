@@ -7,12 +7,14 @@ Sync your Kindle highlights to the vault with zero-config setup.
 **Step 1: Check if this is first run:**
 
 Check if `.kindle/config.json` exists:
+
 - If it EXISTS: Skip to Step 2b
 - If it DOES NOT exist: This is first run, go to Step 1b
 
 **Step 1b (First run only): Ask for output folder:**
 
 Ask the user:
+
 ```
 This is your first time syncing Kindle highlights! Where would you like to save them?
 
@@ -63,31 +65,44 @@ Just reply with A, B, C, D, E, or a number.
 Based on their response and whether it's first run:
 
 **If first run (no config):**
-- If they answer **A** or **10**: Run `node .scripts/kindle/sync.js --limit 10 --output "[their-folder-choice]"`
-- If they answer **B** or **25**: Run `node .scripts/kindle/sync.js --limit 25 --output "[their-folder-choice]"`
-- If they answer **C** or **50**: Run `node .scripts/kindle/sync.js --limit 50 --output "[their-folder-choice]"`
-- If they answer **D** or **all**: Run `node .scripts/kindle/sync.js --all --output "[their-folder-choice]"`
-- If they answer **E** or a number: Run `node .scripts/kindle/sync.js --limit [number] --output "[their-folder-choice]"`
+
+- If they answer **A** or **10**: Run
+  `node .scripts/kindle/sync.js --limit 10 --output "[their-folder-choice]"`
+- If they answer **B** or **25**: Run
+  `node .scripts/kindle/sync.js --limit 25 --output "[their-folder-choice]"`
+- If they answer **C** or **50**: Run
+  `node .scripts/kindle/sync.js --limit 50 --output "[their-folder-choice]"`
+- If they answer **D** or **all**: Run
+  `node .scripts/kindle/sync.js --all --output "[their-folder-choice]"`
+- If they answer **E** or a number: Run
+  `node .scripts/kindle/sync.js --limit [number] --output "[their-folder-choice]"`
 
 **If NOT first run (config exists):**
+
 - If they answer **A** or **10**: Run `node .scripts/kindle/sync.js --limit 10`
 - If they answer **B** or **25**: Run `node .scripts/kindle/sync.js --limit 25`
 - If they answer **C** or **50**: Run `node .scripts/kindle/sync.js --limit 50`
 - If they answer **D** or **all**: Run `node .scripts/kindle/sync.js --all`
-- If they answer **E** or a number: Run `node .scripts/kindle/sync.js --limit [number]`
+- If they answer **E** or a number: Run
+  `node .scripts/kindle/sync.js --limit [number]`
 
-Note: If user just presses Enter for default folder, use `03_Resources/Kindle Highlights` as the path.
+Note: If user just presses Enter for default folder, use
+`03_Resources/Kindle Highlights` as the path.
 
 ## What This Does
 
-Fetches your Kindle highlights from Amazon and creates beautifully formatted Markdown notes in your vault.
+Fetches your Kindle highlights from Amazon and creates beautifully formatted
+Markdown notes in your vault.
 
 **✨ First Run Magic**:
-- First time? You'll choose where to save highlights (defaults to `03_Resources/Kindle Highlights`)
+
+- First time? You'll choose where to save highlights (defaults to
+  `03_Resources/Kindle Highlights`)
 - Not authenticated? Browser opens automatically for Amazon login
 - Everything just works!
 
 **Subsequent syncs:**
+
 - Uses your saved folder location
 - Uses cached authentication
 - Much faster!
@@ -95,6 +110,7 @@ Fetches your Kindle highlights from Amazon and creates beautifully formatted Mar
 ## What Gets Created
 
 Each book creates a note with:
+
 - **YAML frontmatter:** title, author, ASIN, tags, sync date
 - **Metadata:** Total highlights, Kindle notebook link
 - **All highlights:** Each with location and your notes
@@ -103,15 +119,18 @@ Each book creates a note with:
 
 ## Changing Your Settings
 
-Want to change where highlights are saved or other settings? You have three options:
+Want to change where highlights are saved or other settings? You have three
+options:
 
 ### Option 1: Edit Config File Directly (Recommended)
+
 Open `.kindle/config.json` in your vault and edit:
+
 ```json
 {
-  "outputFolder": "02_Areas/Reading",  // Change this to your preferred folder
+  "outputFolder": "02_Areas/Reading", // Change this to your preferred folder
   "templatePath": ".scripts/kindle/templates/kindle-note.md.hbs",
-  "overwrite": false,  // Set to true to replace existing files
+  "overwrite": false, // Set to true to replace existing files
   "addTags": ["kindle", "highlights", "books"],
   "createIndex": true,
   "indexPath": "03_Resources/Kindle Highlights Index.md",
@@ -120,14 +139,19 @@ Open `.kindle/config.json` in your vault and edit:
 ```
 
 ### Option 2: Reset to First-Run Prompt
+
 Delete the config file to trigger the folder selection prompt again:
+
 ```bash
 rm .kindle/config.json
 # Next /kindle-sync will ask where to save highlights
 ```
 
 ### Option 3: One-Time Override
-Use the `--output` flag to save to a different folder just once (without changing config):
+
+Use the `--output` flag to save to a different folder just once (without
+changing config):
+
 ```bash
 node .scripts/kindle/sync.js --limit 10 --output "01_Projects/Current Reading"
 ```
@@ -135,6 +159,7 @@ node .scripts/kindle/sync.js --limit 10 --output "01_Projects/Current Reading"
 ## Tips
 
 ### Expected Timing
+
 - **10 books:** 1-3 minutes
 - **50 books:** 5-10 minutes
 - **100+ books (all):** 15-30 minutes
@@ -142,34 +167,45 @@ node .scripts/kindle/sync.js --limit 10 --output "01_Projects/Current Reading"
 Rate limiting delays are required to avoid Amazon detection.
 
 ### Organization
+
 - Notes are automatically named: `<Author Last Name> - <Title>.md`
 - All include `#kindle`, `#highlights`, `#books` tags
 - Easy to find with Obsidian search or graph view
 
 ### Advanced Configuration
+
 All settings in `.kindle/config.json`:
-- `outputFolder`: Where to save notes (default: `03_Resources/Kindle Highlights`)
+
+- `outputFolder`: Where to save notes (default:
+  `03_Resources/Kindle Highlights`)
 - `templatePath`: Custom Handlebars template location
 - `overwrite`: Whether to replace existing files (default: `false`)
-- `addTags`: Tags to add to all notes (default: `["kindle", "highlights", "books"]`)
+- `addTags`: Tags to add to all notes (default:
+  `["kindle", "highlights", "books"]`)
 - `createIndex`: Whether to create an index file (not yet implemented)
 - `indexPath`: Where to save the index file
 
 ## Troubleshooting
 
 ### "Not authenticated" error
-Shouldn't happen anymore! The script auto-detects and runs authentication. But if you see this:
+
+Shouldn't happen anymore! The script auto-detects and runs authentication. But
+if you see this:
+
 - Just run `/kindle-sync` again
 - It will automatically handle authentication
 
 ### No books found
+
 - Check if your Kindle library is visible at read.amazon.com/notebook
 - Verify you have highlights (not just books in library)
 
 ### Duplicate files
+
 - Set `overwrite: true` in config to replace existing files
 - Or manually delete old files before syncing
 
 ### Scraping seems slow
+
 - Normal! Amazon requires delays between requests
 - Use smaller number of books for faster syncs

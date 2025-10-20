@@ -1,21 +1,16 @@
-import { z } from 'zod';
-import { ValidationError } from './errors.js';
+import { z } from 'zod'
 
-/**
- * Zod schema for highlight colors
- */
-export const highlightColorSchema = z.string();
+import { ValidationError } from './errors.js'
 
 /**
  * Zod schema for a single highlight
  */
 export const highlightSchema = z.object({
   id: z.string().min(1),
-  text: z.string().min(1),
-  note: z.string().optional(),
   location: z.string().optional(),
-  color: highlightColorSchema.optional(),
-});
+  note: z.string().optional(),
+  text: z.string().min(1),
+})
 
 /**
  * Zod schema for book export metadata
@@ -25,35 +20,35 @@ export const bookMetaSchema = z
     totalHighlights: z.number().int().nonnegative().optional(),
     truncatedByCopyright: z.boolean().optional(),
   })
-  .optional();
+  .optional()
 
 /**
  * Zod schema for a complete book export
  */
 export const bookExportSchema = z.object({
-  bookId: z.string().min(1),
-  title: z.string().min(1),
   author: z.string().optional(),
-  source: z.literal('read.amazon.com'),
+  bookId: z.string().min(1),
   extractedAt: z.string().datetime(),
-  notebookUrl: z.string().url().optional(),
   highlights: z.array(highlightSchema),
   meta: bookMetaSchema,
-});
+  notebookUrl: z.string().url().optional(),
+  source: z.literal('read.amazon.com'),
+  title: z.string().min(1),
+})
 
 /**
  * Zod schema for an array of book exports
  */
-export const bookExportsSchema = z.array(bookExportSchema);
+export const bookExportsSchema = z.array(bookExportSchema)
 
 /**
  * Format Zod error issues into readable error messages
  */
 function formatZodError(error) {
   return error.issues.map((issue) => {
-    const path = issue.path.join('.');
-    return `${path}: ${issue.message}`;
-  });
+    const path = issue.path.join('.')
+    return `${path}: ${issue.message}`
+  })
 }
 
 /**
@@ -62,16 +57,15 @@ function formatZodError(error) {
  */
 export function parseBookExports(data) {
   try {
-    return bookExportsSchema.parse(data);
+    return bookExportsSchema.parse(data)
   } catch (error) {
     if (error instanceof z.ZodError) {
       throw new ValidationError(
         'Failed to validate book exports',
         formatZodError(error),
-        { data }
-      );
+      )
     }
-    throw error;
+    throw error
   }
 }
 
@@ -80,15 +74,14 @@ export function parseBookExports(data) {
  */
 export function validateBookExport(data) {
   try {
-    return bookExportSchema.parse(data);
+    return bookExportSchema.parse(data)
   } catch (error) {
     if (error instanceof z.ZodError) {
       throw new ValidationError(
         'Failed to validate book export',
         formatZodError(error),
-        { data }
-      );
+      )
     }
-    throw error;
+    throw error
   }
 }
