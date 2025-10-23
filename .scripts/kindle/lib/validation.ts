@@ -12,6 +12,8 @@ export const highlightSchema = z.object({
   text: z.string().min(1),
 })
 
+export type Highlight = z.infer<typeof highlightSchema>
+
 /**
  * Zod schema for book export metadata
  */
@@ -21,6 +23,8 @@ export const bookMetaSchema = z
     truncatedByCopyright: z.boolean().optional(),
   })
   .optional()
+
+export type BookMeta = z.infer<typeof bookMetaSchema>
 
 /**
  * Zod schema for a complete book export
@@ -36,15 +40,19 @@ export const bookExportSchema = z.object({
   title: z.string().min(1),
 })
 
+export type BookExport = z.infer<typeof bookExportSchema>
+
 /**
  * Zod schema for an array of book exports
  */
 export const bookExportsSchema = z.array(bookExportSchema)
 
+export type BookExports = z.infer<typeof bookExportsSchema>
+
 /**
  * Format Zod error issues into readable error messages
  */
-function formatZodError(error) {
+function formatZodError(error: z.ZodError): string[] {
   return error.issues.map((issue) => {
     const path = issue.path.join('.')
     return `${path}: ${issue.message}`
@@ -55,7 +63,7 @@ function formatZodError(error) {
  * Parse and validate an array of book exports
  * @throws {ValidationError} if validation fails
  */
-export function parseBookExports(data) {
+export function parseBookExports(data: unknown): BookExports {
   try {
     return bookExportsSchema.parse(data)
   } catch (error) {
@@ -72,7 +80,7 @@ export function parseBookExports(data) {
 /**
  * Validate a single book export
  */
-export function validateBookExport(data) {
+export function validateBookExport(data: unknown): BookExport {
   try {
     return bookExportSchema.parse(data)
   } catch (error) {

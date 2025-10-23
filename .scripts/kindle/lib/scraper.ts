@@ -1,26 +1,59 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { chromium } from 'playwright'
+import {
+  type BrowserContext,
+  chromium,
+  type ElementHandle,
+  type Page,
+} from 'playwright'
 
-import { DEFAULT_SCRAPER_CONFIG, NOTEBOOK_URL } from './config.js'
+import type { BookExport, Highlight } from './validation.js'
+
+import {
+  DEFAULT_SCRAPER_CONFIG,
+  NOTEBOOK_URL,
+  type ScraperConfig,
+} from './config.js'
 import { AuthenticationError } from './errors.js'
 import { generateHighlightId } from './utils.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const AUTH_DIR = path.resolve(__dirname, '../../../.kindle/auth')
 
+export interface BookInfo {
+  asin: string
+  author?: string
+  title: string
+}
+
+export interface ScrapeOptions {
+  config?: ScraperConfig
+  headless?: boolean
+  limit?: number
+}
+
+export interface ScrapeResult {
+  books: BookExport[]
+  errors: { asin: string; error: string; title: string }[]
+}
+
 /**
  * Extract text content from an element
  */
-async function extractText(item, selector) {
+async function extractText(
+  item: ElementHandle,
+  selector: string,
+): Promise<string | undefined> {
   const el = await item.$(selector)
-  return el ? (await el.textContent())?.trim() : undefined
+  if (!el) return undefined
+  const textContent = await el.textContent()
+  return textContent?.trim()
 }
 
 /**
  * Launch a persistent browser context using saved authentication
  */
-export async function getContext(headless = false) {
+export async function getContext(headless = false): Promise<BrowserContext> {
   return chromium.launchPersistentContext(AUTH_DIR, {
     headless,
     viewport: { height: 900, width: 1000 },
@@ -32,7 +65,7 @@ export async function getContext(headless = false) {
 /**
  * Verify authentication by checking if we're redirected to signin
  */
-export async function ensureAuth(page) {
+export async function ensureAuth(page: Page): Promise<void> {
   console.log(`🔍 Navigating to: ${NOTEBOOK_URL}`)
   await page.goto(NOTEBOOK_URL, { waitUntil: 'networkidle' })
   console.log(`📍 Current URL: ${page.url()}`)
@@ -49,7 +82,10 @@ export async function ensureAuth(page) {
 /**
  * Discover all books from the sidebar
  */
-export async function discoverBooks(page, config = DEFAULT_SCRAPER_CONFIG) {
+export async function discoverBooks(
+  page: Page,
+  config: ScraperConfig = DEFAULT_SCRAPER_CONFIG,
+): Promise<BookInfo[]> {
   console.log('🔍 Discovering books from sidebar...')
 
   // Wait for notebook container to load
@@ -74,17 +110,26 @@ export async function discoverBooks(page, config = DEFAULT_SCRAPER_CONFIG) {
 
         // Extract title
         const titleEl = el.querySelector(selectors.title)
-        const title = titleEl?.textContent.trim() || 'Unknown'
+        const title = (titleEl?.textContent ?? '').trim() || 'Unknown'
 
         // Extract author
         const authorEl = el.querySelector(selectors.author)
-        let author = authorEl?.textContent.trim()
+        let author = (authorEl?.textContent ?? '').trim() || ''
         if (author) {
           // Remove "By: " prefix if present
           author = author.replace(/^By:\s*/i, '')
         }
 
-        return { asin, author, title }
+        // Build result object, only including author if it exists
+        const result: { asin: string; author?: string; title: string } = {
+          asin,
+          title,
+        }
+        if (author) {
+          result.author = author
+        }
+
+        return result
       })
     },
     {
@@ -100,7 +145,7 @@ export async function discoverBooks(page, config = DEFAULT_SCRAPER_CONFIG) {
 /**
  * Click a book in the sidebar and wait for highlights to load
  */
-export async function clickBook(page, asin) {
+export async function clickBook(page: Page, asin: string): Promise<void> {
   // Find the book div by ASIN
   // The data-action is on a span, and the anchor is inside it
   const bookDiv = page.locator(`#${asin}`)
@@ -125,10 +170,10 @@ export async function clickBook(page, asin) {
  * Scrape a single book's highlights from the current page (after clicking it)
  */
 export async function scrapeBook(
-  page,
-  bookInfo,
-  config = DEFAULT_SCRAPER_CONFIG,
-) {
+  page: Page,
+  bookInfo: BookInfo,
+  config: ScraperConfig = DEFAULT_SCRAPER_CONFIG,
+): Promise<BookExport> {
   const { asin, author, title } = bookInfo
 
   // Click the book to load its highlights
@@ -166,7 +211,7 @@ export async function scrapeBook(
   )
 
   // Filter out empty highlights and generate stable IDs
-  const validHighlights = highlights
+  const validHighlights: Highlight[] = highlights
     .filter((h) => h.text.length > 0)
     .map((h) => ({
       ...h,
@@ -195,7 +240,9 @@ export async function scrapeBook(
 /**
  * Scrape all books from Kindle Notebook
  */
-export async function scrapeAllBooks(options = {}) {
+export async function scrapeAllBooks(
+  options: ScrapeOptions = {},
+): Promise<ScrapeResult> {
   const { config = DEFAULT_SCRAPER_CONFIG, headless = false, limit } = options
 
   console.log('📖 Starting Kindle Notebook scraper\n')
@@ -229,8 +276,8 @@ export async function scrapeAllBooks(options = {}) {
     }
 
     // Scrape each book
-    const results = []
-    const errors = []
+    const results: BookExport[] = []
+    const errors: { asin: string; error: string; title: string }[] = []
 
     for (let i = 0; i < books.length; i++) {
       const bookInfo = books[i]

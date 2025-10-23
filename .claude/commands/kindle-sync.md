@@ -18,8 +18,8 @@ Ask the user:
 ```
 This is your first time syncing Kindle highlights! Where would you like to save them?
 
-Press Enter for default: 03_Resources/Kindle Highlights
-Or type a custom path (e.g., 02_Areas/Reading)
+1. 03_Resources/Kindle Highlights (default)
+2. A custom path (e.g., 02_Areas/Reading)
 
 Your choice:
 ```
@@ -67,24 +67,24 @@ Based on their response and whether it's first run:
 **If first run (no config):**
 
 - If they answer **A** or **10**: Run
-  `node .scripts/kindle/sync.js --limit 10 --output "[their-folder-choice]"`
+  `pnpm kindle:sync --limit 10 --output "[their-folder-choice]"`
 - If they answer **B** or **25**: Run
-  `node .scripts/kindle/sync.js --limit 25 --output "[their-folder-choice]"`
+  `pnpm kindle:sync --limit 25 --output "[their-folder-choice]"`
 - If they answer **C** or **50**: Run
-  `node .scripts/kindle/sync.js --limit 50 --output "[their-folder-choice]"`
+  `pnpm kindle:sync --limit 50 --output "[their-folder-choice]"`
 - If they answer **D** or **all**: Run
-  `node .scripts/kindle/sync.js --all --output "[their-folder-choice]"`
+  `pnpm kindle:sync --all --output "[their-folder-choice]"`
 - If they answer **E** or a number: Run
-  `node .scripts/kindle/sync.js --limit [number] --output "[their-folder-choice]"`
+  `pnpm kindle:sync --limit [number] --output "[their-folder-choice]"`
 
 **If NOT first run (config exists):**
 
-- If they answer **A** or **10**: Run `node .scripts/kindle/sync.js --limit 10`
-- If they answer **B** or **25**: Run `node .scripts/kindle/sync.js --limit 25`
-- If they answer **C** or **50**: Run `node .scripts/kindle/sync.js --limit 50`
-- If they answer **D** or **all**: Run `node .scripts/kindle/sync.js --all`
+- If they answer **A** or **10**: Run `pnpm kindle:sync --limit 10`
+- If they answer **B** or **25**: Run `pnpm kindle:sync --limit 25`
+- If they answer **C** or **50**: Run `pnpm kindle:sync --limit 50`
+- If they answer **D** or **all**: Run `pnpm kindle:sync --all`
 - If they answer **E** or a number: Run
-  `node .scripts/kindle/sync.js --limit [number]`
+  `pnpm kindle:sync --limit [number]`
 
 Note: If user just presses Enter for default folder, use
 `03_Resources/Kindle Highlights` as the path.
@@ -153,7 +153,7 @@ Use the `--output` flag to save to a different folder just once (without
 changing config):
 
 ```bash
-node .scripts/kindle/sync.js --limit 10 --output "01_Projects/Current Reading"
+pnpm kindle:sync --limit 10 --output "01_Projects/Current Reading"
 ```
 
 ## Tips

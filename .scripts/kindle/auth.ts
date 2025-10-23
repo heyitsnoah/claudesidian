@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { chromium } from 'playwright'
+import { type BrowserContext, chromium, type Page } from 'playwright'
 
 import { NOTEBOOK_URL } from './lib/config.js'
 
@@ -11,7 +11,7 @@ const AUTH_DIR = path.resolve(__dirname, '../../.kindle/auth')
 /**
  * Check if authentication is successful by verifying page state
  */
-async function checkAuthenticationSuccess(page) {
+async function checkAuthenticationSuccess(page: Page): Promise<boolean> {
   try {
     // If library loads, we're authenticated
     const count = await page.locator('#kp-notebook-library').count()
@@ -24,7 +24,10 @@ async function checkAuthenticationSuccess(page) {
 /**
  * Poll the page until authentication is successful or timeout
  */
-async function waitForAuthenticationSuccess(page, timeoutMs = 300000) {
+async function waitForAuthenticationSuccess(
+  page: Page,
+  timeoutMs = 300000,
+): Promise<boolean> {
   const startTime = Date.now()
   const pollInterval = 2000 // Check every 2 seconds
 
@@ -50,12 +53,12 @@ async function waitForAuthenticationSuccess(page, timeoutMs = 300000) {
 /**
  * Interactive authentication - opens browser for user to log in
  */
-async function main() {
+async function main(): Promise<void> {
   console.log('🔐 Kindle Authentication\n')
   console.log('📁 Session will be saved to:', AUTH_DIR)
   console.log('⏱️  Timeout: 5 minutes\n')
 
-  const ctx = await chromium.launchPersistentContext(AUTH_DIR, {
+  const ctx: BrowserContext = await chromium.launchPersistentContext(AUTH_DIR, {
     headless: false,
     viewport: { height: 900, width: 1000 },
     // Position on right side of screen (works for most screen sizes)
@@ -116,7 +119,8 @@ async function main() {
     console.log('Next steps:')
     console.log('   • Run /kindle-sync to sync your highlights')
   } catch (error) {
-    console.error('\n❌ Authentication failed:', error.message)
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    console.error('\n❌ Authentication failed:', errorMessage)
     console.log('\nTroubleshooting:')
     console.log('   • Make sure you fully logged in to Amazon')
     console.log('   • Verify your book library is visible in the browser')
@@ -126,7 +130,7 @@ async function main() {
   }
 }
 
-main().catch((error) => {
+main().catch((error: unknown) => {
   console.error('❌ Authentication failed:', error)
   process.exit(1)
 })

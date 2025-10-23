@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto'
 /**
  * Sanitize a string for use in filenames by replacing invalid characters
  */
-export function fileSafe(input) {
+export function fileSafe(input: string): string {
   return input.replace(/[\\/:*?"<>|]/g, '_').trim()
 }
 
@@ -11,7 +11,10 @@ export function fileSafe(input) {
  * Generate a stable hash-based ID for a highlight
  * Uses text + location to ensure stability across exports
  */
-export function generateHighlightId(text, location) {
+export function generateHighlightId(
+  text: string,
+  location: string | undefined,
+): string {
   const content = location ? `${text}::${location}` : text
   return createHash('sha256').update(content).digest('hex').slice(0, 16)
 }
@@ -20,7 +23,7 @@ export function generateHighlightId(text, location) {
  * Extract ASIN from Amazon Kindle Notebook URL
  * Falls back to slugified title if ASIN not found
  */
-export function extractBookId(url, title) {
+export function extractBookId(url: string, title: string): string {
   const asinMatch = /[?&]asin=([^&]+)/.exec(url)
   if (asinMatch?.[1]) {
     return asinMatch[1]
@@ -39,7 +42,7 @@ export function extractBookId(url, title) {
 /**
  * Format date for YAML frontmatter
  */
-export function formatDate(date) {
+export function formatDate(date: Date | string): string {
   if (typeof date === 'string') {
     date = new Date(date)
   }
@@ -49,7 +52,7 @@ export function formatDate(date) {
 /**
  * Extract author's last name from full author name
  */
-function extractLastName(author) {
+function extractLastName(author: string): string {
   if (!author) return 'Unknown'
   const parts = author.trim().split(/\s+/)
   return parts[parts.length - 1] || 'Unknown'
@@ -58,7 +61,10 @@ function extractLastName(author) {
 /**
  * Create a safe filename from book title and author
  */
-export function createBookFilename(title, author) {
+export function createBookFilename(
+  title: string,
+  author: string | undefined,
+): string {
   const safeTitle = fileSafe(title)
 
   if (author) {

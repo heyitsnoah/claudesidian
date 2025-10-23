@@ -22,10 +22,10 @@
     "transcript:extract": ".scripts/transcript-extract.sh",
     "vault:stats": ".scripts/vault-stats.sh",
     "check-updates": "REMOTE=$(curl -s https://raw.githubusercontent.com/heyitsnoah/claudesidian/main/package.json | grep version | head -1 | sed 's/.*: \"\\(.*\\)\".*/\\1/') && LOCAL=$(grep version package.json | head -1 | sed 's/.*: \"\\(.*\\)\".*/\\1/') && if [ \"$LOCAL\" != \"$REMOTE\" ]; then echo -e \"📦 Update available! Latest: $REMOTE (you have: $LOCAL)\\n\\n⬇\\n/upgrade\\n⬆\\n\\n## What will this do\\n\\n✅ Update to the latest version of Claudesidian\\n✅ Get new features and improvements\\n✅ Preserve your vault content and settings\\n\\n\"; fi",
-    "kindle:auth": "node .scripts/kindle/auth.js",
-    "kindle:sync": "node .scripts/kindle/sync.js",
-    "kindle:sync-all": "node .scripts/kindle/sync.js --all",
-    "kindle:config": "node .scripts/kindle/config.js --interactive",
+    "kindle:auth": "tsx .scripts/kindle/auth.ts",
+    "kindle:sync": "tsx .scripts/kindle/sync.ts",
+    "kindle:sync-all": "tsx .scripts/kindle/sync.ts --all",
+    "kindle:config": "tsx .scripts/kindle/config.ts --interactive",
     "playwright:install": "pnpm exec playwright install chromium"
   },
   "keywords": [
@@ -50,6 +50,8 @@
   },
   "devDependencies": {
     "@eslint/compat": "^1.3.0",
+    "@types/node": "^24.9.1",
+    "@types/yargs": "^17.0.33",
     "@typescript-eslint/eslint-plugin": "^8.35.0",
     "@typescript-eslint/parser": "^8.35.0",
     "eslint": "^9.29.0",
@@ -60,6 +62,8 @@
     "prettier": "^3.6.0",
     "prettier-plugin-packagejson": "^2.5.15",
     "prettier-plugin-sort-json": "^4.1.1",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
     "typescript-eslint": "^8.35.0"
   },
   "packageManager": "pnpm@9.15.4"

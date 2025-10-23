@@ -7,6 +7,8 @@ import { fileURLToPath } from 'node:url'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 
+import type { BookExports } from './lib/validation.js'
+
 import { loadConfig, updateConfig } from './config.js'
 import { AuthenticationError, formatError } from './lib/errors.js'
 import {
@@ -19,13 +21,32 @@ import { scrapeAllBooks } from './lib/scraper.js'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const CACHE_PATH = path.resolve(__dirname, '../../.kindle/cache/all_books.json')
 const AUTH_DIR = path.resolve(__dirname, '../../.kindle/auth')
-const AUTH_SCRIPT = path.resolve(__dirname, './auth.js')
+const AUTH_SCRIPT = path.resolve(__dirname, './auth.ts')
 const CONFIG_PATH = path.resolve(__dirname, '../../.kindle/config.json')
+
+export interface SyncOptions {
+  all?: boolean
+  books?: string
+  force?: boolean
+  headless?: boolean
+  last?: number
+  limit?: number
+  outputFolder?: string
+}
+
+interface GetOrScrapeOptions {
+  all: boolean
+  force: boolean
+  headless: boolean
+  last?: number
+  limit?: number
+  specificBooks?: string
+}
 
 /**
  * Check if authentication exists
  */
-async function checkAuthExists() {
+async function checkAuthExists(): Promise<boolean> {
   try {
     const stats = await fs.stat(AUTH_DIR)
     if (!stats.isDirectory()) return false
@@ -41,7 +62,7 @@ async function checkAuthExists() {
 /**
  * Check if this is the first run (no config file exists)
  */
-async function isFirstRun() {
+async function isFirstRun(): Promise<boolean> {
   try {
     await fs.access(CONFIG_PATH)
     return false
@@ -53,7 +74,7 @@ async function isFirstRun() {
 /**
  * Prompt user for output folder on first run
  */
-async function promptForOutputFolder() {
+async function promptForOutputFolder(): Promise<string> {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -77,11 +98,11 @@ async function promptForOutputFolder() {
 /**
  * Run authentication script
  */
-async function runAuth() {
+async function runAuth(): Promise<void> {
   console.log('🔐 Authentication required. Starting auth flow...\n')
 
   return new Promise((resolve, reject) => {
-    const authProcess = spawn('node', [AUTH_SCRIPT], {
+    const authProcess = spawn('tsx', [AUTH_SCRIPT], {
       cwd: path.dirname(AUTH_SCRIPT),
       stdio: 'inherit', // Pass through stdin/stdout/stderr
     })
@@ -104,7 +125,9 @@ async function runAuth() {
 /**
  * Handle first-run setup: prompt for output folder and save to config
  */
-async function ensureFirstRunSetup(outputFolder) {
+async function ensureFirstRunSetup(
+  outputFolder?: string,
+): Promise<string | undefined> {
   const firstRun = await isFirstRun()
 
   if (firstRun && !outputFolder) {
@@ -124,7 +147,9 @@ async function ensureFirstRunSetup(outputFolder) {
 /**
  * Get books either from cache or by scraping, with auth retry logic
  */
-async function getOrScrapeBooks(options) {
+async function getOrScrapeBooks(
+  options: GetOrScrapeOptions,
+): Promise<BookExports> {
   const { all, force, headless, last, limit, specificBooks } = options
 
   // Determine scraping strategy
@@ -180,8 +205,16 @@ async function getOrScrapeBooks(options) {
 /**
  * Attempt to scrape books with proper error handling and caching
  */
-async function attemptScrape(scrapeLimit, headless, last) {
-  const result = await scrapeAllBooks({ headless, limit: scrapeLimit })
+async function attemptScrape(
+  scrapeLimit: number | undefined,
+  headless: boolean,
+  last: number | undefined,
+): Promise<BookExports> {
+  const scrapeOptions: { headless: boolean; limit?: number } = { headless }
+  if (scrapeLimit !== undefined) {
+    scrapeOptions.limit = scrapeLimit
+  }
+  const result = await scrapeAllBooks(scrapeOptions)
   let books = result.books
 
   // If using --last flag, get the last N books instead of first N
@@ -216,7 +249,7 @@ async function attemptScrape(scrapeLimit, headless, last) {
 /**
  * Main sync function
  */
-async function sync(options) {
+async function sync(options: SyncOptions): Promise<void> {
   const {
     all = false,
     books: specificBooks,
@@ -251,7 +284,21 @@ async function sync(options) {
   console.log(`📄 Template: ${config.templatePath}\n`)
 
   // Get books from cache or by scraping
-  const books = await getOrScrapeBooks(options)
+  const scrapeOptions: GetOrScrapeOptions = {
+    all,
+    force,
+    headless: options.headless ?? false,
+  }
+  if (options.last !== undefined) {
+    scrapeOptions.last = options.last
+  }
+  if (options.limit !== undefined) {
+    scrapeOptions.limit = options.limit
+  }
+  if (specificBooks !== undefined) {
+    scrapeOptions.specificBooks = specificBooks
+  }
+  const books = await getOrScrapeBooks(scrapeOptions)
 
   if (books.length === 0) {
     console.log('⚠️  No books to sync')
@@ -297,7 +344,7 @@ async function sync(options) {
 /**
  * CLI interface
  */
-async function main() {
+async function main(): Promise<void> {
   const argv = await yargs(hideBin(process.argv))
     .option('all', {
       alias: 'a',
@@ -346,18 +393,27 @@ async function main() {
     .alias('h', 'help')
     .parseAsync()
 
-  await sync({
+  const syncOptions: SyncOptions = {
     all: argv.all,
-    books: argv.books,
     force: argv.force,
     headless: argv.headless,
-    last: argv.last,
-    limit: argv.limit,
-    outputFolder: argv.output,
-  })
+  }
+  if (argv.books !== undefined) {
+    syncOptions.books = argv.books
+  }
+  if (argv.last !== undefined) {
+    syncOptions.last = argv.last
+  }
+  if (argv.limit !== undefined) {
+    syncOptions.limit = argv.limit
+  }
+  if (argv.output !== undefined) {
+    syncOptions.outputFolder = argv.output
+  }
+  await sync(syncOptions)
 }
 
-main().catch((error) => {
+main().catch((error: unknown) => {
   console.error('\n❌ Sync failed:', formatError(error))
   process.exit(1)
 })

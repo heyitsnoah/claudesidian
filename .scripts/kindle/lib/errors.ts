@@ -6,7 +6,7 @@
  * Base error class for all Kindle export errors
  */
 export class KindleExportError extends Error {
-  constructor(message) {
+  constructor(message: string) {
     super(message)
     this.name = this.constructor.name
     Error.captureStackTrace(this, this.constructor)
@@ -22,7 +22,9 @@ export class AuthenticationError extends KindleExportError {}
  * Error thrown when data validation fails
  */
 export class ValidationError extends KindleExportError {
-  constructor(message, errors) {
+  public errors: string[]
+
+  constructor(message: string, errors: string[]) {
     super(message)
     this.errors = errors
   }
@@ -32,7 +34,9 @@ export class ValidationError extends KindleExportError {
  * Error thrown when file operations fail
  */
 export class FileSystemError extends KindleExportError {
-  constructor(message, path) {
+  public path: string
+
+  constructor(message: string, path: string) {
     super(message)
     this.path = path
   }
@@ -41,7 +45,7 @@ export class FileSystemError extends KindleExportError {
 /**
  * Format error for user-friendly display
  */
-export function formatError(error) {
+export function formatError(error: unknown): string {
   if (error instanceof Error) {
     return `${error.name}: ${error.message}`
   }

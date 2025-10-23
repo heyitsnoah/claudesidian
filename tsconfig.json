@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "exactOptionalPropertyTypes": true,
+    "incremental": true,
+    "isolatedModules": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "noImplicitReturns": true, // preferred over https://typescript-eslint.io/rules/consistent-return/
+    "noUnusedLocals": false, // prefer using https://typescript-eslint.io/rules/no-unused-vars/
+    "noUnusedParameters": false, // prefer using https://typescript-eslint.io/rules/no-unused-vars/
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ES2020",
+    "verbatimModuleSyntax": false // prefer using https://typescript-eslint.io/rules/consistent-type-imports
+  },
+  "exclude": ["node_modules", "dist", ".user-config", ".kindle"],
+  "include": [".scripts/**/*", ".claude/**/*"]
+}
