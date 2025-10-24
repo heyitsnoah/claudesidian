@@ -2,16 +2,20 @@
 name: setup-firecrawl
 description: Interactive setup wizard for Firecrawl web scraping scripts
 allowed-tools: [Read, Write, Bash, AskUserQuestion]
-argument-hint: "(optional) skip steps with 'quick' if you already have API key configured"
+argument-hint:
+  "(optional) skip steps with 'quick' if you already have API key configured"
 ---
 
 # Firecrawl Setup Wizard
 
-This command guides you through setting up Firecrawl for web scraping, enabling you to save articles, documentation, and web content directly to your vault as clean, searchable markdown.
+This command guides you through setting up Firecrawl for web scraping, enabling
+you to save articles, documentation, and web content directly to your vault as
+clean, searchable markdown.
 
 ## Task
 
 Set up Firecrawl web scraping by:
+
 1. Explaining the benefits of Firecrawl for research workflows
 2. Getting a Firecrawl API key (300 free credits to start)
 3. Configuring the FIRECRAWL_API_KEY environment variable
@@ -25,8 +29,9 @@ Set up Firecrawl web scraping by:
 
 Start by explaining what Firecrawl enables:
 
-**The Research Game-Changer:**
-Instead of Claude reading webpages and summarizing (losing details), Firecrawl saves the FULL text as markdown in your vault. This means:
+**The Research Game-Changer:** Instead of Claude reading webpages and
+summarizing (losing details), Firecrawl saves the FULL text as markdown in your
+vault. This means:
 
 - **Permanent archive**: Articles stay in your vault forever
 - **Full context**: Complete text, not summaries
@@ -35,6 +40,7 @@ Instead of Claude reading webpages and summarizing (losing details), Firecrawl s
 - **Clean format**: Beautiful markdown, not messy HTML
 
 **Perfect for:**
+
 - Research projects (save all related articles)
 - Documentation archives (keep important guides)
 - Knowledge bases (build your own reference library)
@@ -44,12 +50,14 @@ Instead of Claude reading webpages and summarizing (losing details), Firecrawl s
 ### 2. Prerequisites Check
 
 Verify required tools are installed:
+
 ```bash
 curl --version  # Should be installed
 jq --version    # Should be installed (for JSON parsing)
 ```
 
 If jq is missing:
+
 - **macOS**: `brew install jq`
 - **Linux**: `apt-get install jq` or `yum install jq`
 - **Windows**: Use WSL or Git Bash
@@ -59,21 +67,25 @@ If jq is missing:
 Ask: "Do you already have a Firecrawl API key? (yes/no)"
 
 If no:
+
 1. Direct them to: https://firecrawl.dev
 2. Explain:
    - Sign up for free account
    - Get 300 free credits to start
    - Open-source project, can self-host if needed
-3. Guide to dashboard: "Go to your dashboard and copy your API key (starts with 'fc-...')"
+3. Guide to dashboard: "Go to your dashboard and copy your API key (starts with
+   'fc-...')"
 4. Wait for them to confirm they have the key
 
 If yes:
+
 1. Check if it's already in their environment: `echo $FIRECRAWL_API_KEY`
 2. If not set, ask them to provide it
 
 ### 4. Configure Environment Variable
 
 Detect their shell:
+
 ```bash
 echo $SHELL
 ```
@@ -81,18 +93,21 @@ echo $SHELL
 Based on the shell, add the API key to the appropriate config file:
 
 **For zsh** (.zshrc):
+
 ```bash
 echo 'export FIRECRAWL_API_KEY="fc-their-actual-key"' >> ~/.zshrc
 source ~/.zshrc
 ```
 
 **For bash** (.bashrc or .bash_profile):
+
 ```bash
 echo 'export FIRECRAWL_API_KEY="fc-their-actual-key"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
 Verify it's set:
+
 ```bash
 echo $FIRECRAWL_API_KEY
 ```
@@ -102,6 +117,7 @@ echo $FIRECRAWL_API_KEY
 There are two scraping scripts in `.scripts/`:
 
 #### firecrawl-scrape.sh (Single URL)
+
 For scraping one URL at a time with control over the filename:
 
 ```bash
@@ -113,6 +129,7 @@ For scraping one URL at a time with control over the filename:
 ```
 
 #### firecrawl-batch.sh (Multiple URLs)
+
 For scraping multiple URLs at once with auto-generated filenames:
 
 ```bash
@@ -127,6 +144,7 @@ For scraping multiple URLs at once with auto-generated filenames:
 ### 6. Create Necessary Folders
 
 Make sure the default Clippings folder exists:
+
 ```bash
 mkdir -p 00_Inbox/Clippings
 ```
@@ -138,16 +156,19 @@ Perform a test scrape to verify everything works:
 Ask: "Would you like to test with a sample article? (yes/no)"
 
 If yes:
+
 ```bash
 .scripts/firecrawl-scrape.sh "https://example.com" "00_Inbox/test-scrape.md"
 ```
 
 Check the output:
+
 - Look for: "✓ Scraped content saved to: 00_Inbox/test-scrape.md"
 - Verify the file has content: `wc -l 00_Inbox/test-scrape.md`
 - Show first few lines: `head -20 00_Inbox/test-scrape.md`
 
 If successful, offer to delete test file:
+
 ```bash
 rm 00_Inbox/test-scrape.md
 ```
@@ -155,6 +176,7 @@ rm 00_Inbox/test-scrape.md
 ### 8. Show Research Workflows
 
 #### Workflow 1: Save Single Article
+
 ```bash
 # User says: "Save this article to my vault: https://blog.example.com/great-post"
 # You run:
@@ -162,6 +184,7 @@ rm 00_Inbox/test-scrape.md
 ```
 
 #### Workflow 2: Batch Research Collection
+
 ```bash
 # User provides list of research URLs
 # You run:
@@ -172,6 +195,7 @@ rm 00_Inbox/test-scrape.md
 ```
 
 #### Workflow 3: Build Reference Library
+
 ```bash
 # Save documentation and tutorials to Resources
 .scripts/firecrawl-batch.sh -o "03_Resources/Tech-Docs/" \
@@ -180,6 +204,7 @@ rm 00_Inbox/test-scrape.md
 ```
 
 #### Workflow 4: Reading List
+
 ```bash
 # Quickly save interesting articles to read later
 .scripts/firecrawl-batch.sh \
@@ -192,6 +217,7 @@ rm 00_Inbox/test-scrape.md
 ### 9. Usage Tips
 
 **Best Practices:**
+
 1. **Organize as you save**: Use meaningful filenames and folders
 2. **Batch similar content**: Group related articles in same folder
 3. **Add frontmatter**: After scraping, add tags/metadata to notes
@@ -199,12 +225,14 @@ rm 00_Inbox/test-scrape.md
 5. **Clean up**: Regularly process Clippings folder
 
 **Cost Management:**
+
 - Free tier: 300 credits
 - Each scrape uses ~1 credit
 - Monitor usage in Firecrawl dashboard
 - Can self-host for unlimited use
 
 **Common Patterns:**
+
 - Ask Claude: "Save this to my vault: [URL]"
 - Ask Claude: "Scrape these 10 articles into my Research folder: [URLs]"
 - Ask Claude: "Find and save the top 5 articles about [topic]"
@@ -212,6 +240,7 @@ rm 00_Inbox/test-scrape.md
 ### 10. Success Message
 
 Show a summary:
+
 ```
 ✓ Firecrawl is now set up!
 
@@ -256,6 +285,7 @@ For more web scraping options: https://docs.firecrawl.dev
 ## Output
 
 Progress through each step, showing:
+
 - ✓ Checkmarks for completed steps
 - Clear examples of usage
 - Verification that scraping works
@@ -269,6 +299,7 @@ Progress through each step, showing:
 ```
 
 Or with API key already configured:
+
 ```
 /setup-firecrawl quick
 ```
