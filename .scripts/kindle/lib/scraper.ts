@@ -198,13 +198,15 @@ export async function scrapeBook(
       // Extract note text (if present)
       const note = await extractText(item, '.kp-notebook-note #note')
 
-      // Extract location from metadata
+      // Extract location and/or page from metadata
       const locationText = await extractText(item, '#annotationHighlightHeader')
       const location = locationText?.match(/Location:\s*(\S+)/i)?.[1]
+      const page = locationText?.match(/Page:\s*(\S+)/i)?.[1]
 
       return {
         location,
         note,
+        page,
         text,
       }
     }),
@@ -215,7 +217,7 @@ export async function scrapeBook(
     .filter((h) => h.text.length > 0)
     .map((h) => ({
       ...h,
-      id: generateHighlightId(h.text, h.location),
+      id: generateHighlightId(h.text, h.location, h.page),
     }))
 
   const notebookUrl = `${NOTEBOOK_URL}?asin=${asin}`

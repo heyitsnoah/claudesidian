@@ -16,7 +16,7 @@ lastSynced: {{extractedAt}}
 ## Highlights
 
 {{#each highlights}}
-{{text}}{{#if location}} - loc: [{{location}}]({{kindleLink ../bookId location}}){{/if}}
+{{text}}{{#if location}} - loc: [{{location}}]({{kindleLink ../bookId location}}){{else}}{{#if page}} - page: {{page}}{{/if}}{{/if}}
 
 {{#if note}}
 ***Note:*** {{{decode note}}}

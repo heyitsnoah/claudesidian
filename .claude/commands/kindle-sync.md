@@ -54,7 +54,7 @@ How many books would you like to sync?
 A. 10 books (recommended) - Quick sync of your 10 most-recently highlighted books
 B. 25 books - Broader sync
 C. 50 books - Extensive sync
-D. All books - Complete library (10-30 min for large libraries -- only )
+D. All books - Resyncs your complete library (10-30 min for large libraries -- only )
 E. Custom number - You specify how many
 
 Just reply with A, B, C, D, E, or a number.
@@ -118,26 +118,40 @@ Each book creates a note with:
 
 ## Changing Your Settings
 
-Want to change where highlights are saved or other settings? You have three
+Want to change where highlights are saved or other settings? You have four
 options:
 
-### Option 1: Edit Config File Directly (Recommended)
+### Option 1: View Current Settings
+
+See what your current configuration is:
+
+```bash
+pnpm kindle:config
+```
+
+### Option 2: Edit Config File Directly (Recommended for Multiple Changes)
 
 Open `.kindle/config.json` in your vault and edit:
 
 ```json
 {
-  "outputFolder": "02_Areas/Reading", // Change this to your preferred folder
+  "outputFolder": "03_Resources/Kindle Highlights",
   "templatePath": ".scripts/kindle/templates/kindle-note.md.hbs",
-  "overwrite": false, // Set to true to replace existing files
+  "overwrite": true,
   "addTags": ["kindle", "highlights", "books"],
-  "createIndex": true,
-  "indexPath": "03_Resources/Kindle Highlights Index.md",
   "lastSync": "2025-10-19T22:30:00.000Z"
 }
 ```
 
-### Option 2: Reset to First-Run Prompt
+**Available settings:**
+
+- `outputFolder`: Where to save notes (default: `03_Resources/Kindle Highlights`)
+- `templatePath`: Custom Handlebars template location
+- `overwrite`: Whether to replace existing files on re-sync (default: `true`)
+- `addTags`: Tags to add to all notes (default: `["kindle", "highlights", "books"]`)
+- `lastSync`: Timestamp of last sync (auto-updated)
+
+### Option 3: Reset to First-Run Prompt
 
 Delete the config file to trigger the folder selection prompt again:
 
@@ -146,7 +160,7 @@ rm .kindle/config.json
 # Next /kindle-sync will ask where to save highlights
 ```
 
-### Option 3: One-Time Override
+### Option 4: One-Time Override
 
 Use the `--output` flag to save to a different folder just once (without
 changing config):
@@ -168,21 +182,8 @@ Rate limiting delays are required to avoid Amazon detection.
 ### Organization
 
 - Notes are automatically named: `<Author Last Name> - <Title>.md`
-- All include `#kindle`, `#highlights`, `#books` tags
+- All include `#kindle`, `#highlights`, `#books` tags by default
 - Easy to find with Obsidian search or graph view
-
-### Advanced Configuration
-
-All settings in `.kindle/config.json`:
-
-- `outputFolder`: Where to save notes (default:
-  `03_Resources/Kindle Highlights`)
-- `templatePath`: Custom Handlebars template location
-- `overwrite`: Whether to replace existing files (default: `false`)
-- `addTags`: Tags to add to all notes (default:
-  `["kindle", "highlights", "books"]`)
-- `createIndex`: Whether to create an index file (not yet implemented)
-- `indexPath`: Where to save the index file
 
 ## Troubleshooting
 
@@ -199,10 +200,13 @@ if you see this:
 - Check if your Kindle library is visible at read.amazon.com/notebook
 - Verify you have highlights (not just books in library)
 
-### Duplicate files
+### Preventing file overwrites
 
-- Set `overwrite: true` in config to replace existing files
-- Or manually delete old files before syncing
+By default, kindle-sync will overwrite existing files on re-sync. To preserve
+your edits:
+
+- Set `overwrite: false` in `.kindle/config.json`
+- Or rename files you've edited so they won't match the sync pattern
 
 ### Scraping seems slow
 

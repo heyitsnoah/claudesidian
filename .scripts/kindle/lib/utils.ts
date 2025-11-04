@@ -9,13 +9,15 @@ export function fileSafe(input: string): string {
 
 /**
  * Generate a stable hash-based ID for a highlight
- * Uses text + location to ensure stability across exports
+ * Uses text + location/page to ensure stability across exports
  */
 export function generateHighlightId(
   text: string,
   location: string | undefined,
+  page?: string | undefined,
 ): string {
-  const content = location ? `${text}::${location}` : text
+  const positionMarker = location || page
+  const content = positionMarker ? `${text}::${positionMarker}` : text
   return createHash('sha256').update(content).digest('hex').slice(0, 16)
 }
 

@@ -9,6 +9,7 @@ export const highlightSchema = z.object({
   id: z.string().min(1),
   location: z.string().optional(),
   note: z.string().optional(),
+  page: z.string().optional(),
   text: z.string().min(1),
 })
 
