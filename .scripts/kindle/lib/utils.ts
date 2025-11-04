@@ -51,10 +51,27 @@ export function formatDate(date: Date | string): string {
 
 /**
  * Extract author's last name from full author name
+ * For multiple authors, extracts the last name of the first author:
+ * - 3+ authors (with comma): "Juan Rulfo, Gabriel García Márquez, and Douglas J. Weatherford"
+ * - 2 authors (with "and"): "Juan Rulfo and Gabriel García Márquez"
+ * - Single author: "Juan Rulfo"
  */
 function extractLastName(author: string): string {
   if (!author) return 'Unknown'
-  const parts = author.trim().split(/\s+/)
+
+  let firstAuthor = author.trim()
+
+  // If there's a comma, take everything before the first comma (handles 3+ authors)
+  if (firstAuthor.includes(',')) {
+    firstAuthor = firstAuthor.split(',')[0].trim()
+  }
+  // Otherwise, if there's "and", take everything before it (handles 2 authors)
+  else if (/\band\b/i.test(firstAuthor)) {
+    firstAuthor = firstAuthor.split(/\band\b/i)[0].trim()
+  }
+
+  // Extract the last name (last word) from the first author
+  const parts = firstAuthor.split(/\s+/)
   return parts[parts.length - 1] || 'Unknown'
 }
 

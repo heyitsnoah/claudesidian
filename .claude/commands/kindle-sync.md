@@ -83,8 +83,7 @@ Based on their response and whether it's first run:
 - If they answer **B** or **25**: Run `pnpm kindle:sync --limit 25`
 - If they answer **C** or **50**: Run `pnpm kindle:sync --limit 50`
 - If they answer **D** or **all**: Run `pnpm kindle:sync --all`
-- If they answer **E** or a number: Run
-  `pnpm kindle:sync --limit [number]`
+- If they answer **E** or a number: Run `pnpm kindle:sync --limit [number]`
 
 Note: If user just presses Enter for default folder, use
 `03_Resources/Kindle Highlights` as the path.
