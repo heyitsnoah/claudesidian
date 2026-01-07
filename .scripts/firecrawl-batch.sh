@@ -44,9 +44,9 @@ CLIPPINGS_DIR="$OUTPUT_DIR"
 # Create clippings directory if it doesn't exist
 mkdir -p "$CLIPPINGS_DIR"
 
-# Function to sanitize filename
+# Function to sanitize filename (preserve CJK characters, only remove filesystem-illegal chars)
 sanitize_filename() {
-    echo "$1" | sed 's/[^a-zA-Z0-9 -]//g' | sed 's/ \+/ /g' | sed 's/^ *//;s/ *$//'
+    echo "$1" | sed 's/[\/\\:*?"<>|]//g' | sed 's/ \+/ /g' | sed 's/^ *//;s/ *$//'
 }
 
 # Function to extract domain name for fallback
