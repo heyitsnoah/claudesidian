@@ -8,6 +8,22 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.14.2] - 2026-01-13
+
+### Changed
+
+- Updated `@modelcontextprotocol/sdk` to v1.25.2 (fixes HIGH severity ReDoS and DNS rebinding vulnerabilities)
+- Updated dev dependencies (eslint, prettier, typescript-eslint) to latest versions
+
+### Added
+
+- MIT license attribution for kepano/obsidian-skills (json-canvas, obsidian-bases, obsidian-markdown)
+- Added `.worktrees/` to gitignore for git worktree workflow support
+
+### Security
+
+- Fixed 5 Dependabot security alerts (3 high, 2 moderate)
+
 ## [0.14.1] - 2026-01-13
 
 ### Fixed
@@ -457,7 +473,10 @@ and this project adheres to
 - API keys stored in environment variables
 - .mcp.json gitignored for security
 
-[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.13.1...HEAD
+[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.14.2...HEAD
+[0.14.2]: https://github.com/heyitsnoah/claudesidian/compare/v0.14.1...v0.14.2
+[0.14.1]: https://github.com/heyitsnoah/claudesidian/compare/v0.14.0...v0.14.1
+[0.14.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.13.1...v0.14.0
 [0.13.1]: https://github.com/heyitsnoah/claudesidian/compare/v0.13.0...v0.13.1
 [0.13.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.12.1...v0.13.0
 [0.12.1]: https://github.com/heyitsnoah/claudesidian/compare/v0.12.0...v0.12.1
