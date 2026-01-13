@@ -32,8 +32,9 @@ capabilities.
 - Check if already on latest version:
 
   ```bash
-  CURRENT=$(grep '"version"' package.json | sed 's/.*: "\(.*\)".*/\1/')
-  LATEST=$(curl -s https://raw.githubusercontent.com/heyitsnoah/claudesidian/main/package.json | grep '"version"' | sed 's/.*: "\(.*\)".*/\1/')
+  # Use cut instead of sed to avoid zsh parentheses escaping issues
+  CURRENT=$(grep '"version"' package.json | head -1 | cut -d'"' -f4)
+  LATEST=$(curl -s https://raw.githubusercontent.com/heyitsnoah/claudesidian/main/package.json | grep '"version"' | head -1 | cut -d'"' -f4)
 
   if [ "$CURRENT" = "$LATEST" ]; then
     echo "✅ You're already on the latest version ($CURRENT)"
