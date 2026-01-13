@@ -8,6 +8,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.14.1] - 2026-01-13
+
+### Fixed
+
+- Preserve CJK (Chinese/Japanese/Korean) characters in filename sanitization for `firecrawl-batch.sh`
+- Replace sed with cut in `/upgrade` command for zsh compatibility
+
 ## [0.14.0] - 2026-01-13
 
 ### Added
