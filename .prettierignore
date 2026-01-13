@@ -24,3 +24,6 @@ build/
 
 # Ignore git
 .git/
+
+# Ignore markdown files
+*.md
