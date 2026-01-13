@@ -8,6 +8,24 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [0.14.0] - 2026-01-13
+
+### Added
+
+- New `.claude/skills/` directory with auto-triggered skills system
+  - `obsidian-markdown` - Obsidian Flavored Markdown reference (wikilinks, callouts, embeds)
+  - `obsidian-bases` - .base file creation and editing guide
+  - `json-canvas` - .canvas file creation and editing guide
+  - `systematic-debugging` - 4-phase debugging methodology
+  - `skill-creator` - Guide for creating new skills and commands
+  - `git-worktrees` - Git worktree workflow guide
+- New `/pragmatic-review` command for YAGNI/KISS-focused code review
+  - Default mode: Fast scan for over-engineering
+  - Deep mode (--deep): 6-pass comprehensive review
+  - CI mode (--ci): Non-interactive for GitHub Actions
+- Skill discovery hook that lists available skills when user mentions "skill"
+- Updated `.prettierignore` to exclude markdown files
+
 ## [0.13.1] - 2025-10-13
 
 ### Fixed
