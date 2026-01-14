@@ -13,6 +13,17 @@
           }
         ]
       }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/skill-discovery.sh",
+            "timeout": 5000,
+            "type": "command"
+          }
+        ]
+      }
     ]
   }
 }

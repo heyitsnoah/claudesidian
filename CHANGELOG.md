@@ -12,6 +12,46 @@ and this project adheres to
 
 - New `kindle-sync` command for syncing a user's kindle highlights and notes to
   their vault.
+## [0.14.2] - 2026-01-13
+
+### Changed
+
+- Updated `@modelcontextprotocol/sdk` to v1.25.2 (fixes HIGH severity ReDoS and DNS rebinding vulnerabilities)
+- Updated dev dependencies (eslint, prettier, typescript-eslint) to latest versions
+
+### Added
+
+- MIT license attribution for kepano/obsidian-skills (json-canvas, obsidian-bases, obsidian-markdown)
+- Added `.worktrees/` to gitignore for git worktree workflow support
+
+### Security
+
+- Fixed 5 Dependabot security alerts (3 high, 2 moderate)
+
+## [0.14.1] - 2026-01-13
+
+### Fixed
+
+- Preserve CJK (Chinese/Japanese/Korean) characters in filename sanitization for `firecrawl-batch.sh`
+- Replace sed with cut in `/upgrade` command for zsh compatibility
+
+## [0.14.0] - 2026-01-13
+
+### Added
+
+- New `.claude/skills/` directory with auto-triggered skills system
+  - `obsidian-markdown` - Obsidian Flavored Markdown reference (wikilinks, callouts, embeds)
+  - `obsidian-bases` - .base file creation and editing guide
+  - `json-canvas` - .canvas file creation and editing guide
+  - `systematic-debugging` - 4-phase debugging methodology
+  - `skill-creator` - Guide for creating new skills and commands
+  - `git-worktrees` - Git worktree workflow guide
+- New `/pragmatic-review` command for YAGNI/KISS-focused code review
+  - Default mode: Fast scan for over-engineering
+  - Deep mode (--deep): 6-pass comprehensive review
+  - CI mode (--ci): Non-interactive for GitHub Actions
+- Skill discovery hook that lists available skills when user mentions "skill"
+- Updated `.prettierignore` to exclude markdown files
 
 ## [0.13.1] - 2025-10-13
 
@@ -437,7 +477,10 @@ and this project adheres to
 - API keys stored in environment variables
 - .mcp.json gitignored for security
 
-[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.13.1...HEAD
+[Unreleased]: https://github.com/heyitsnoah/claudesidian/compare/v0.14.2...HEAD
+[0.14.2]: https://github.com/heyitsnoah/claudesidian/compare/v0.14.1...v0.14.2
+[0.14.1]: https://github.com/heyitsnoah/claudesidian/compare/v0.14.0...v0.14.1
+[0.14.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.13.1...v0.14.0
 [0.13.1]: https://github.com/heyitsnoah/claudesidian/compare/v0.13.0...v0.13.1
 [0.13.0]: https://github.com/heyitsnoah/claudesidian/compare/v0.12.1...v0.13.0
 [0.12.1]: https://github.com/heyitsnoah/claudesidian/compare/v0.12.0...v0.12.1
