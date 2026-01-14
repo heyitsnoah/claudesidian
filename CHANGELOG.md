@@ -8,6 +8,10 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- New `kindle-sync` command for syncing a user's kindle highlights and notes to
+  their vault.
 ## [0.14.2] - 2026-01-13
 
 ### Changed

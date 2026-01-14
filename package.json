@@ -21,7 +21,12 @@
     "attachments:create-organized": "mkdir -p 05_Attachments/Organized",
     "transcript:extract": ".scripts/transcript-extract.sh",
     "vault:stats": ".scripts/vault-stats.sh",
-    "check-updates": "REMOTE=$(curl -s https://raw.githubusercontent.com/heyitsnoah/claudesidian/main/package.json | grep version | head -1 | sed 's/.*: \"\\(.*\\)\".*/\\1/') && LOCAL=$(grep version package.json | head -1 | sed 's/.*: \"\\(.*\\)\".*/\\1/') && if [ \"$LOCAL\" != \"$REMOTE\" ]; then echo -e \"📦 Update available! Latest: $REMOTE (you have: $LOCAL)\\n\\n⬇\\n/upgrade\\n⬆\\n\\n## What will this do\\n\\n✅ Update to the latest version of Claudesidian\\n✅ Get new features and improvements\\n✅ Preserve your vault content and settings\\n\\n\"; fi"
+    "check-updates": "REMOTE=$(curl -s https://raw.githubusercontent.com/heyitsnoah/claudesidian/main/package.json | grep version | head -1 | sed 's/.*: \"\\(.*\\)\".*/\\1/') && LOCAL=$(grep version package.json | head -1 | sed 's/.*: \"\\(.*\\)\".*/\\1/') && if [ \"$LOCAL\" != \"$REMOTE\" ]; then echo -e \"📦 Update available! Latest: $REMOTE (you have: $LOCAL)\\n\\n⬇\\n/upgrade\\n⬆\\n\\n## What will this do\\n\\n✅ Update to the latest version of Claudesidian\\n✅ Get new features and improvements\\n✅ Preserve your vault content and settings\\n\\n\"; fi",
+    "kindle:auth": "tsx .scripts/kindle/auth.ts",
+    "kindle:sync": "tsx .scripts/kindle/sync.ts",
+    "kindle:sync-all": "tsx .scripts/kindle/sync.ts --all",
+    "kindle:config": "tsx .scripts/kindle/config.ts --interactive",
+    "playwright:install": "pnpm exec playwright install chromium"
   },
   "keywords": [
     "obsidian",
@@ -37,9 +42,16 @@
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
     "@modelcontextprotocol/sdk": "^1.25.2"
+    "handlebars": "^4.7.8",
+    "html-entities": "^2.6.0",
+    "playwright": "^1.48.0",
+    "yargs": "^17.7.2",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@eslint/compat": "^1.4.1",
+    "@types/node": "^24.9.1",
+    "@types/yargs": "^17.0.33",
     "@typescript-eslint/eslint-plugin": "^8.53.0",
     "@typescript-eslint/parser": "^8.53.0",
     "eslint": "^9.39.2",
@@ -50,6 +62,8 @@
     "prettier": "^3.7.4",
     "prettier-plugin-packagejson": "^2.5.21",
     "prettier-plugin-sort-json": "^4.2.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
     "typescript-eslint": "^8.53.0"
   },
   "packageManager": "pnpm@9.15.4"

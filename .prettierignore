@@ -25,5 +25,8 @@ build/
 # Ignore git
 .git/
 
+# Ignore Handlebars templates (use Handlebars-specific syntax)
+.scripts/kindle/templates/*.hbs
+
 # Ignore markdown files
 *.md
