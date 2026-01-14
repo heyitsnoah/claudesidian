@@ -31,18 +31,6 @@ export class ValidationError extends KindleExportError {
 }
 
 /**
- * Error thrown when file operations fail
- */
-export class FileSystemError extends KindleExportError {
-  public path: string
-
-  constructor(message: string, path: string) {
-    super(message)
-    this.path = path
-  }
-}
-
-/**
  * Format error for user-friendly display
  */
 export function formatError(error: unknown): string {

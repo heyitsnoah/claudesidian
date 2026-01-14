@@ -9,7 +9,6 @@ export interface BookSelectors {
 }
 
 export interface HighlightSelectors {
-  colorAttribute: string // Color is in the class name, e.g., .kp-notebook-highlight-yellow
   item: string // Container for all highlights
   location: string // Location is in the highlight header
   note: string // Note text
@@ -30,14 +29,8 @@ export interface ScraperConfig {
 }
 
 export interface ScrapingConfig {
-  maxLazyLoadRounds: number
-  maxStableRounds: number
-  pageLoadTimeout: number
   rateLimitBaseDelay: number
   rateLimitJitter: number
-  scrollBaseDelay: number
-  scrollDelayIncrease: number
-  scrollJitter: number
 }
 
 /**
@@ -53,7 +46,6 @@ export const DEFAULT_SCRAPER_CONFIG: ScraperConfig = {
     links: '.kp-notebook-library-each-book', // Individual book items in sidebar (not actual links, but clickable divs)
   },
   highlightSelectors: {
-    colorAttribute: '.kp-notebook-highlight', // Color is in the class name, e.g., .kp-notebook-highlight-yellow
     item: '#kp-notebook-annotations > .a-row.a-spacing-base', // Container for all highlights
     location: '#annotationHighlightHeader', // Location is in the highlight header
     note: '.kp-notebook-note #note', // Note text
@@ -65,14 +57,8 @@ export const DEFAULT_SCRAPER_CONFIG: ScraperConfig = {
     truncationWarning: '.copyright-export-limit', // Copyright truncation warning
   },
   scraping: {
-    maxLazyLoadRounds: 30,
-    maxStableRounds: 3,
-    pageLoadTimeout: 30000,
     rateLimitBaseDelay: 500,
     rateLimitJitter: 400,
-    scrollBaseDelay: 600,
-    scrollDelayIncrease: 20,
-    scrollJitter: 400,
   },
 }
 

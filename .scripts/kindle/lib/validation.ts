@@ -77,20 +77,3 @@ export function parseBookExports(data: unknown): BookExports {
     throw error
   }
 }
-
-/**
- * Validate a single book export
- */
-export function validateBookExport(data: unknown): BookExport {
-  try {
-    return bookExportSchema.parse(data)
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      throw new ValidationError(
-        'Failed to validate book export',
-        formatZodError(error),
-      )
-    }
-    throw error
-  }
-}

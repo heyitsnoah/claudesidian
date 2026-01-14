@@ -145,10 +145,12 @@ Open `.kindle/config.json` in your vault and edit:
 
 **Available settings:**
 
-- `outputFolder`: Where to save notes (default: `03_Resources/Kindle Highlights`)
+- `outputFolder`: Where to save notes (default:
+  `03_Resources/Kindle Highlights`)
 - `templatePath`: Custom Handlebars template location
 - `overwrite`: Whether to replace existing files on re-sync (default: `true`)
-- `addTags`: Tags to add to all notes (default: `["kindle", "highlights", "books"]`)
+- `addTags`: Tags to add to all notes (default:
+  `["kindle", "highlights", "books"]`)
 - `lastSync`: Timestamp of last sync (auto-updated)
 
 ### Option 3: Reset to First-Run Prompt

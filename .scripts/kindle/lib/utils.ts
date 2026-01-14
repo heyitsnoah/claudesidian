@@ -14,31 +14,11 @@ export function fileSafe(input: string): string {
 export function generateHighlightId(
   text: string,
   location: string | undefined,
-  page?: string | undefined,
+  page?: string,
 ): string {
   const positionMarker = location || page
   const content = positionMarker ? `${text}::${positionMarker}` : text
   return createHash('sha256').update(content).digest('hex').slice(0, 16)
-}
-
-/**
- * Extract ASIN from Amazon Kindle Notebook URL
- * Falls back to slugified title if ASIN not found
- */
-export function extractBookId(url: string, title: string): string {
-  const asinMatch = /[?&]asin=([^&]+)/.exec(url)
-  if (asinMatch?.[1]) {
-    return asinMatch[1]
-  }
-
-  // Fallback: slugify title
-  return title
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .slice(0, 50) // Reasonable length limit
 }
 
 /**
