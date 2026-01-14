@@ -262,14 +262,11 @@ async function sync(options: SyncOptions): Promise<void> {
   // Handle first-run setup
   const outputFolder = await ensureFirstRunSetup(initialOutputFolder)
 
-  // Check authentication before proceeding with scraping
-  const needsScraping = force || all || specificBooks || !all
-  if (needsScraping) {
-    const hasAuth = await checkAuthExists()
-    if (!hasAuth) {
-      console.log('⚠️  No authentication found.\n')
-      await runAuth()
-    }
+  // Check authentication before proceeding
+  const hasAuth = await checkAuthExists()
+  if (!hasAuth) {
+    console.log('⚠️  No authentication found.\n')
+    await runAuth()
   }
 
   // Load configuration
