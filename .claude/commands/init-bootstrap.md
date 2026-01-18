@@ -9,8 +9,32 @@ argument-hint: "(optional) path to existing vault or 'new' for fresh setup"
 
 # Initialize Bootstrap Configuration
 
-This command helps you create a personalized CLAUDE.md configuration file by
-asking questions about your Obsidian workflow and preferences.
+This command helps you create a personalized configuration file by asking
+questions about your Obsidian workflow and preferences.
+
+## Environment Detection
+
+**IMPORTANT**: This setup works with both Claude Code and OpenCode. Detect which
+environment is running:
+
+```bash
+# Check for OpenCode markers
+if [ -d ".opencode" ] && [ -f "opencode.json" ]; then
+  TOOL="opencode"
+  CONFIG_DIR=".opencode"
+  CONFIG_FILE=".opencode/config.json"
+elif [ -d ".claude" ]; then
+  TOOL="claude-code"
+  CONFIG_DIR=".claude"
+  CONFIG_FILE=".claude/vault-config.json"
+fi
+```
+
+When configuring:
+- **Claude Code**: Use `.claude/vault-config.json` for preferences
+- **OpenCode**: Use `.opencode/config.json` for preferences
+- Both use the same CLAUDE.md for user-facing instructions
+- Both share the same vault structure and commands
 
 ## Task
 
@@ -146,8 +170,10 @@ Then generate a customized CLAUDE.md file tailored to their needs.
      - Show example usage: `.scripts/firecrawl-scrape.sh https://example.com`
 
 6. **Generate Custom Configuration**
-   - Get current date: `date +"%B %d, %Y"` for the CLAUDE.md header
-   - Save preferences to `.claude/vault-config.json`:
+    - Get current date: `date +"%B %d, %Y"` for the CLAUDE.md header
+    - Save preferences to the appropriate config file based on tool detected:
+      - Claude Code: `.claude/vault-config.json`
+      - OpenCode: `.opencode/config.json`
      ```json
      {
        "user": {
