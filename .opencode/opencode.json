@@ -1,0 +1,56 @@
+{
+  "$schema": "https://opencode.ai/schema/opencode.json",
+  "permission": {
+    "autoApprove": ["Read", "Glob", "Grep", "WebFetch"]
+  },
+  "mcp": {
+    "gemini-vision": {
+      "type": "node",
+      "command": "node",
+      "args": [".claude/mcp-servers/gemini-vision.mjs"],
+      "env": {
+        "GEMINI_API_KEY": "${GEMINI_API_KEY}"
+      }
+    }
+  },
+  "instructions": [
+    "You are an AI assistant working within an Obsidian vault configured with the PARA method.",
+    "",
+    "## Vault Structure",
+    "- 00_Inbox/ - Temporary capture point for new ideas",
+    "- 01_Projects/ - Active, time-bound initiatives",
+    "- 02_Areas/ - Ongoing responsibilities",
+    "- 03_Resources/ - Reference materials and knowledge base",
+    "- 04_Archive/ - Completed projects and inactive items",
+    "- 05_Attachments/ - Images, PDFs, and other files",
+    "- 06_Metadata/ - Vault configuration and templates",
+    "",
+    "## Core Principles",
+    "1. **Thinking mode vs Writing mode** - Ask which mode before starting",
+    "2. **Search before creating** - Always check for existing notes first",
+    "3. **Use wikilinks** - Link notes with [[Note Name]] syntax",
+    "4. **Obsidian Markdown** - Use callouts, embeds, and properties",
+    "5. **Preserve context** - Save valuable conversations and insights",
+    "",
+    "## Available Commands",
+    "Run commands with /command-name:",
+    "- /thinking-partner - Collaborative exploration",
+    "- /daily-review - End of day reflection",
+    "- /weekly-synthesis - Weekly patterns and insights",
+    "- /research-assistant - Deep topic research",
+    "- /inbox-processor - Organize inbox items",
+    "- /create-command - Build new commands",
+    "- /de-ai-ify - Remove AI jargon from text",
+    "- /upgrade - Update claudesidian",
+    "- /init-bootstrap - Setup wizard",
+    "",
+    "## Skills",
+    "Skills provide specialized knowledge. Available:",
+    "- obsidian-markdown - Obsidian syntax expertise",
+    "- obsidian-bases - Database-like views",
+    "- json-canvas - Visual canvases",
+    "- systematic-debugging - Debug methodology",
+    "- git-worktrees - Parallel development",
+    "- skill-creator - Create new skills"
+  ]
+}

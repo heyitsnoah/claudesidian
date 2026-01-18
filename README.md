@@ -1,11 +1,11 @@
 # Claudesidian: Claude Code + Obsidian Starter Kit
 
-Turn your Obsidian vault into an AI-powered second brain using Claude Code.
+Turn your Obsidian vault into an AI-powered second brain using Claude Code or OpenCode.
 
 ## What is this?
 
 This is a pre-configured Obsidian vault structure designed to work seamlessly
-with Claude Code, enabling you to:
+with Claude Code (or [OpenCode](https://github.com/sst/opencode), an open-source alternative), enabling you to:
 
 - Use AI as a thinking partner, not just a writing assistant
 - Organize knowledge using the PARA method
@@ -37,6 +37,8 @@ cd my-vault
 
 ### 2. Run the Setup Wizard
 
+**Using Claude Code:**
+
 ```bash
 # Start Claude Code in the directory
 claude
@@ -44,6 +46,18 @@ claude
 # Run the interactive setup wizard (in Claude Code)
 /init-bootstrap
 ```
+
+**Using OpenCode (open-source alternative):**
+
+```bash
+# Start OpenCode in the directory
+opencode
+
+# Run the interactive setup wizard
+/init-bootstrap
+```
+
+See [.opencode/README.md](.opencode/README.md) for OpenCode-specific setup details.
 
 This will:
 
@@ -67,7 +81,7 @@ This will:
 
 ### 4. Your First Session
 
-Tell Claude Code:
+Tell Claude Code (or OpenCode):
 
 ```
 I'm starting a new project about [topic].
@@ -76,7 +90,7 @@ Please search my vault for any relevant existing notes,
 then help me explore this topic by asking questions.
 ```
 
-Or use one of the pre-configured commands (in Claude Code):
+Or use one of the pre-configured commands:
 
 ```
 /thinking-partner   # For collaborative exploration
@@ -97,6 +111,8 @@ claudesidian/
 ├── 06_Metadata/        # Vault configuration and templates
 │   ├── Reference/      # Documentation and guides
 │   └── Templates/      # Reusable note templates
+├── .claude/            # Claude Code configuration
+├── .opencode/          # OpenCode configuration (alternative)
 └── .scripts/           # Helper scripts for automation
 ```
 
@@ -139,9 +155,9 @@ claudesidian/
 - Completed projects with their outputs
 - Old notes no longer relevant
 
-## Claude Code Commands
+## Commands
 
-Pre-configured AI assistants ready to use:
+Pre-configured AI assistants ready to use (works with both Claude Code and OpenCode):
 
 - `thinking-partner` - Explore ideas through questions
 - `inbox-processor` - Organize your captures
@@ -155,11 +171,11 @@ Pre-configured AI assistants ready to use:
 - `install-claudesidian-command` - Install shell command to launch vault from
   anywhere
 
-Run with: `/[command-name]` in Claude Code
+Run with: `/[command-name]`
 
 ### Staying Updated with `/upgrade`
 
-Claudesidian automatically checks for updates when you start Claude Code and
+Claudesidian automatically checks for updates when you start a session and
 will remind you to run `/upgrade` when new features are available.
 
 The upgrade command intelligently merges new features while preserving your
@@ -346,9 +362,9 @@ You are a research assistant.
 
 ## Troubleshooting
 
-### Claude Code can't find my notes
+### Can't find my notes
 
-- Make sure you're running Claude Code from the vault root directory
+- Make sure you're running from the vault root directory
 - Check file permissions
 - Verify markdown files have `.md` extension
 
@@ -391,13 +407,14 @@ better with everyone's input.
 
 ### What We're Looking For
 
-- **New commands**: Useful Claude Code commands for common workflows
+- **New commands**: Useful commands for common workflows
 - **New agents**: Specialized agents for specific tasks
 - **Documentation improvements**: Better explanations, examples, or guides
 - **Bug fixes**: Found something broken? Fix it!
 - **Workflow templates**: Share your productive workflows
 - **Helper scripts**: Automation tools that make vault management easier
 - **Integration guides**: Connect Claudesidian with other tools
+- **OpenCode compatibility**: Ensure features work with both Claude Code and OpenCode
 - **Core updates**: Improvements to the upgrade system, setup wizard, or other
   core features
 
@@ -437,6 +454,7 @@ makes this better for everyone!
 - [Obsidian Documentation](https://help.obsidian.md)
 - [PARA Method](https://fortelabs.com/blog/para/)
 - [Claude Code Documentation](https://claude.ai/docs)
+- [OpenCode GitHub](https://github.com/sst/opencode) - Open-source alternative
 
 ## Inspiration
 

@@ -36,7 +36,8 @@
   "license": "MIT",
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
-    "@modelcontextprotocol/sdk": "^1.25.2"
+    "@modelcontextprotocol/sdk": "^1.25.2",
+    "@opencode-ai/plugin": "^1.1.19"
   },
   "devDependencies": {
     "@eslint/compat": "^1.4.1",
