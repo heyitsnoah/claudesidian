@@ -2,16 +2,16 @@
 
 # Transcript extraction script for YouTube videos
 # Usage: .scripts/transcript-extract.sh <youtube-url> [output-path]
-# Default output: 00_Inbox/Clippings/
+# Default output: 01_FleetingNotes/
 
 set -e
 
 URL="$1"
-OUTPUT_PATH="${2:-00_Inbox/Clippings/}"
+OUTPUT_PATH="${2:-01_FleetingNotes/}"
 
 if [ -z "$URL" ]; then
     echo "Usage: $0 <youtube-url> [output-path]"
-    echo "Default output path: 00_Inbox/Clippings/"
+    echo "Default output path: 01_FleetingNotes/"
     exit 1
 fi
 

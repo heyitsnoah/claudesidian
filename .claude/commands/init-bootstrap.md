@@ -696,10 +696,10 @@ files]
 
 I can see you're using:
 
-- A modified PARA structure with custom folders
+- A custom folder structure with topic-based organization
 - Date-prefixed files for daily notes (YYYY-MM-DD)
-- Project folders with nested research
-- Heavy use of the Resources folder for reference material
+- Research folders with nested notes
+- Good use of tags and wikilinks
 
 📦 **Importing your vault...** [Copying files to OLD_VAULT/] [Preserving
 .obsidian settings] [Checking for plugin folders]

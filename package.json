@@ -10,15 +10,6 @@
     "lint:check": "eslint --config .config/eslint.config.js . && prettier --config .config/.prettierrc.js --check .",
     "format": "prettier --config .config/.prettierrc.js --write .",
     "format:check": "prettier --config .config/.prettierrc.js --check .",
-    "attachments:list": "ls -1 '05_Attachments/' | grep -v Organized | head -20",
-    "attachments:count": "ls -1 '05_Attachments/' | grep -v Organized | wc -l",
-    "attachments:organized": "ls -1 '05_Attachments/Organized' 2>/dev/null | wc -l || echo '0'",
-    "attachments:unprocessed": "pnpm attachments:count",
-    "attachments:refs": "grep -r \"$1\" . --include=\"*.md\" 2>/dev/null | head -20",
-    "attachments:sizes": "find 05_Attachments -type f -exec du -h {} + | sort -rh | head -20",
-    "attachments:orphans": "for file in 05_Attachments/*; do basename \"$file\" | xargs -I {} sh -c 'grep -r \"{}\" . --include=\"*.md\" > /dev/null || echo \"{}\"'; done",
-    "attachments:recent": "find 05_Attachments -type f -mtime -7 -exec ls -la {} \\;",
-    "attachments:create-organized": "mkdir -p 05_Attachments/Organized",
     "transcript:extract": ".scripts/transcript-extract.sh",
     "vault:stats": ".scripts/vault-stats.sh",
     "check-updates": "REMOTE=$(curl -s https://raw.githubusercontent.com/heyitsnoah/claudesidian/main/package.json | grep version | head -1 | sed 's/.*: \"\\(.*\\)\".*/\\1/') && LOCAL=$(grep version package.json | head -1 | sed 's/.*: \"\\(.*\\)\".*/\\1/') && if [ \"$LOCAL\" != \"$REMOTE\" ]; then echo -e \"📦 Update available! Latest: $REMOTE (you have: $LOCAL)\\n\\n⬇\\n/upgrade\\n⬆\\n\\n## What will this do\\n\\n✅ Update to the latest version of Claudesidian\\n✅ Get new features and improvements\\n✅ Preserve your vault content and settings\\n\\n\"; fi"
@@ -30,7 +21,8 @@
     "ai",
     "second-brain",
     "knowledge-management",
-    "para-method"
+    "gtd",
+    "zettelkasten"
   ],
   "author": "",
   "license": "MIT",

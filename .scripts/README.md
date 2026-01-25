@@ -4,13 +4,6 @@ Helper scripts for vault automation and web content capture.
 
 ## Available Scripts
 
-### Attachment Management
-
-These are primarily called via npm/pnpm commands in package.json:
-
-- `update-attachment-links.js` - Updates note links after moving attachments
-- `fix-renamed-links.js` - Fixes links after renaming files
-
 ### Web Content Capture
 
 **Note**: These scripts require API keys to function:
@@ -31,12 +24,12 @@ Scrapes multiple URLs and auto-generates filenames.
 ```bash
 # Requires FIRECRAWL_API_KEY environment variable
 
-# Basic usage - saves to 00_Inbox/Clippings/
+# Basic usage - saves to 01_FleetingNotes/
 .scripts/firecrawl-batch.sh <url1> <url2> <url3>
 
 # Custom output directory
-.scripts/firecrawl-batch.sh -o 01_Projects/Research/ <url1> <url2>
-.scripts/firecrawl-batch.sh --output-dir 03_Resources/Articles/ <url1> <url2>
+.scripts/firecrawl-batch.sh -o 02_LiteratureNotes/ <url1> <url2>
+.scripts/firecrawl-batch.sh --output-dir "Digital Twin/" <url1> <url2>
 ```
 
 ### Transcript Extraction
@@ -46,28 +39,34 @@ Scrapes multiple URLs and auto-generates filenames.
 Extracts transcripts from YouTube videos.
 
 ```bash
-# Basic usage - saves to 00_Inbox/Clippings/
+# Basic usage - saves to 01_FleetingNotes/
 .scripts/transcript-extract.sh <youtube-url>
 
 # Custom output directory
-.scripts/transcript-extract.sh <youtube-url> 01_Projects/Research/
+.scripts/transcript-extract.sh <youtube-url> 02_LiteratureNotes/
+```
+
+### Vault Statistics
+
+#### vault-stats.sh
+
+Shows statistics about your vault.
+
+```bash
+.scripts/vault-stats.sh
+# or
+pnpm vault:stats
 ```
 
 ## NPM Scripts
 
 Run these from the vault root with `pnpm`:
 
-| Command                        | Description                           |
-| ------------------------------ | ------------------------------------- |
-| `attachments:list`             | Show first 20 unprocessed attachments |
-| `attachments:count`            | Count unprocessed attachments         |
-| `attachments:organized`        | Count files in Organized folder       |
-| `attachments:unprocessed`      | Same as count                         |
-| `attachments:refs <file>`      | Find references to a specific file    |
-| `attachments:sizes`            | Show 20 largest attachment files      |
-| `attachments:orphans`          | Find unreferenced attachments         |
-| `attachments:recent`           | Show files added in last 7 days       |
-| `attachments:create-organized` | Create the Organized subfolder        |
+| Command       | Description                     |
+| ------------- | ------------------------------- |
+| `vault:stats` | Show vault statistics           |
+| `lint`        | Run ESLint and Prettier         |
+| `format`      | Format code with Prettier       |
 
 ## Setup Requirements
 

@@ -51,7 +51,8 @@ pnpm install
 # Create necessary directories
 echo ""
 echo "📁 Creating folder structure..."
-mkdir -p 00_Inbox 01_Projects 02_Areas 03_Resources 04_Archive 05_Attachments/Organized 06_Metadata/{Reference,Templates}
+mkdir -p "00_GTD/00_Actions" "00_GTD/01_Projects/Personal" "00_GTD/01_Projects/Work" "00_GTD/02_Reference"
+mkdir -p "01_FleetingNotes" "02_LiteratureNotes" "03_PermanentNotes" "04_Templates" "Daily"
 echo "✅ Folders created"
 
 # Git setup
@@ -98,7 +99,7 @@ echo "================="
 echo ""
 echo "Next steps:"
 echo "1. Start Claude Code in this directory: claude"
-echo "2. Read the Welcome note in 00_Inbox/"
+echo "2. Run /init-bootstrap to personalize your vault"
 echo "3. Try: /thinking-partner (in Claude Code)"
 echo ""
 echo "Happy note-taking! 🧠✨"

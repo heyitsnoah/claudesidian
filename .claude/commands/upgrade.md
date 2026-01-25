@@ -86,7 +86,7 @@ capabilities.
 
 - Create checklist of files that need review
 - Explicitly EXCLUDE:
-  - User content folders (00_Inbox, 01_Projects, etc.)
+  - User content folders (00_GTD, 01_FleetingNotes, 02_LiteratureNotes, etc.)
   - User's CLAUDE.md (their personalized version)
   - vault-config.json (user's vault configuration)
   - .obsidian/ (user's Obsidian settings)
@@ -264,7 +264,7 @@ fi
 - Combine new capabilities with existing personality
 - Maintain user's established workflows
 
-**Templates** (`06_Metadata/Templates/*.md`):
+**Templates** (`04_Templates/*.md`):
 
 - Preserve custom fields and structure
 - Add new template features

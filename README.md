@@ -324,7 +324,7 @@ Best practices:
 
 Create specialized commands by saving instructions in `.claude/commands/`:
 
-**Research Assistant** (`06_Metadata/Agents/research-assistant.md`):
+**Research Assistant** (`.claude/commands/research-assistant.md`):
 
 ```markdown
 You are a research assistant.

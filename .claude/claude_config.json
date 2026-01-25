@@ -13,7 +13,7 @@
       "file": "commands/thinking-partner.md"
     },
     "inbox-processor": {
-      "description": "Organize inbox items using PARA method",
+      "description": "Process notes through GTD + Zettelkasten workflow",
       "file": "commands/inbox-processor.md"
     },
     "research-assistant": {
@@ -37,9 +37,8 @@
     "ws": "weekly-synthesis"
   },
   "preferences": {
-    "primary_folders": ["00_Inbox", "01_Projects", "02_Areas", "03_Resources"],
-    "template_folder": "06_Metadata/Templates",
-    "archive_after_days": 30,
-    "default_note_location": "00_Inbox"
+    "primary_folders": ["00_GTD", "01_FleetingNotes", "02_LiteratureNotes", "03_PermanentNotes"],
+    "template_folder": "04_Templates",
+    "default_note_location": "01_FleetingNotes"
   }
 }

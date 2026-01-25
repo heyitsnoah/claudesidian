@@ -6,7 +6,7 @@
 # Requires: FIRECRAWL_API_KEY environment variable
 
 # Default output directory
-OUTPUT_DIR="00_Inbox/Clippings/"
+OUTPUT_DIR="01_FleetingNotes/"
 URLS=()
 
 # Parse arguments
@@ -25,7 +25,7 @@ done
 
 if [ ${#URLS[@]} -eq 0 ]; then
     echo "Usage: $0 [-o|--output-dir <dir>] <url1> <url2> ..."
-    echo "Default output directory: 00_Inbox/Clippings/"
+    echo "Default output directory: 01_FleetingNotes/"
     echo ""
     echo "Options:"
     echo "  -o, --output-dir <dir>  Specify custom output directory"
