@@ -2,7 +2,7 @@
 name: init-bootstrap
 description:
   Interactive setup wizard that helps new users create a personalized CLAUDE.md
-  file based on their Obsidian workflow preferences
+  file based on their GTD + Zettelkasten workflow preferences
 allowed-tools: [Read, Write, MultiEdit, Bash, Task]
 argument-hint: "(optional) path to existing vault or 'new' for fresh setup"
 ---
@@ -18,9 +18,9 @@ Read the CLAUDE-BOOTSTRAP.md template and interactively gather information about
 the user's:
 
 - Existing vault structure (if any)
-- Workflow preferences
+- Workflow preferences (GTD + Zettelkasten)
 - Note-taking style
-- Organization methods
+- Study topics and research interests
 - Specific requirements
 
 Then generate a customized CLAUDE.md file tailored to their needs.
@@ -89,17 +89,16 @@ Then generate a customized CLAUDE.md file tailored to their needs.
      - If multiple people found, list them numbered for selection
      - If wrong person, offer to search again or skip
      - Save relevant context about their work, writing style, areas of expertise
-   - "Do you follow the PARA method or have a different organization system?"
    - "What are your main use cases? (research, writing, project management,
      knowledge base, daily notes)"
 
-   **If using PARA, ask specific setup questions:**
-   [PARA Method by Tiago Forte](https://fortelabs.com/blog/para/)
-   - "What active projects are you working on?" (Create folders in 01_Projects)
-   - "What areas of responsibility do you maintain?" (e.g., Work, Health,
-     Finance, Family)
-   - "What topics do you research frequently?" (Set up in 03_Resources)
-   - "Any projects you recently completed?" (Can archive with summaries)
+   **GTD + Zettelkasten Setup Questions:**
+   [GTD by David Allen](https://gettingthingsdone.com/)
+   [Zettelkasten Method](https://zettelkasten.de/introduction/)
+   - "What major study topics are you currently focused on?" (Create dedicated folders)
+   - "What types of content do you consume most?" (books, articles, videos, podcasts)
+   - "Do you prefer daily notes for task tracking or a separate GTD system?"
+   - "What reference materials do you need quick access to?" (Set up in 00_GTD/Reference/)
 
    **General preferences:**
    - Check .obsidian/community-plugins.json to see what plugins they use
@@ -172,32 +171,32 @@ Then generate a customized CLAUDE.md file tailored to their needs.
        },
        "vaultPath": "/path/to/existing/vault",
        "fileNamingPattern": "detected-pattern",
-       "organizationMethod": "PARA",
-       "primaryUses": ["research", "writing", "projects"],
+       "organizationMethod": "GTD+Zettelkasten",
+       "primaryUses": ["research", "writing", "knowledge-building"],
        "tools": {
          "geminiVision": true,
          "firecrawl": false
        },
-       "projects": ["Book - Productivity", "SaaS App"],
-       "areas": ["Newsletter", "Health"],
+       "studyTopics": ["Digital Twin", "Morphic"],
+       "contentTypes": ["books", "articles", "videos"],
        "importedAt": "2025-01-13",
        "lastUpdated": "2025-01-13"
      }
      ```
    - Start with CLAUDE-BOOTSTRAP.md as base
    - Add user-specific sections:
-     - Custom folder structure with their actual projects/areas
-     - Personal workflows
+     - Custom folder structure with their study topics
+     - Personal workflows (GTD + Zettelkasten)
      - Preferred tools and scripts
      - Specific guidelines
      - MCP configuration if set up
    - Include their websites/resources if provided
    - Add any custom naming conventions
-   - Pre-populate with their projects and areas:
-     - Create project folders in 01_Projects/
-     - Create area folders in 02_Areas/
-     - Create resource topics in 03_Resources/
-     - Add README files explaining each project/area
+   - Pre-populate with their structure:
+     - Create study topic folders (e.g., Digital Twin/, Morphic/)
+     - Set up GTD reference materials in 00_GTD/Reference/
+     - Create templates in 04_Templates/
+     - Add README files explaining each folder
 
 7. **Import Existing Vault (if applicable)**
    - If user has existing vault:
@@ -212,18 +211,24 @@ Then generate a customized CLAUDE.md file tailored to their needs.
      - Skip copying: `.git/` (they'll have their own), `.claude/` (using ours)
      - Show summary: "Imported your vault to OLD_VAULT/ (X files, Y folders)"
      - Explain: "Your original structure is preserved in OLD_VAULT. You can
-       gradually migrate files to the PARA folders as needed."
+       gradually migrate files to the Zettelkasten folders as needed."
 
 8. **Create Supporting Files**
-   - Generate initial folder structure if new vault
+   - Generate initial folder structure if new vault:
+     - 00_GTD/ with Reference/ and Templates/ subfolders
+     - 01_FleetingNotes/
+     - 02_LiteratureNotes/
+     - 03_PermanentNotes/
+     - 04_Templates/
+     - Daily/
+     - Study topic folders (e.g., Digital Twin/, Morphic/)
    - Create README files for main folders
-   - For each project folder, create subfolders:
-     - Research/ (source materials)
-     - Chats/ (AI conversations)
-     - Daily Progress/ (running log)
-   - Create 05_Attachments/Organized/ directory
    - Set up .gitignore if using git (include .mcp.json, node_modules)
-   - Create initial templates if requested
+   - Create initial templates if requested:
+     - Fleeting note template
+     - Literature note template
+     - Permanent note template
+     - Daily note template
    - Create WEEKLY_REVIEW.md if user wants review ritual
    - Remove FIRST_RUN marker file if it exists
    - Make initial git commit if repository was initialized
@@ -317,16 +322,18 @@ Dependencies ✅ Folder structure ✅ Git initialized
 2. [Next action based on their goals]
 3. [Specific to their workflow]
 
-## Pro Tips from Research Masters
+## Pro Tips for GTD + Zettelkasten
 
-- **Be a token maximalist**: Provide lots of context to Claude
-- **Writing scales**: Document everything for future reference
-  ([Noah Brier](https://every.to/superorganizers/ceo-by-day-internet-sleuth-by-night-267452))
-- **Trust emergence**: Important ideas will keep surfacing
-- **Start with writing**: Always begin projects in text form
-- **Review regularly**: Set aside time weekly to prune and update
-- **PARA Method**: Projects, Areas, Resources, Archive
-  ([Tiago Forte](https://fortelabs.com/blog/para/))
+- **Capture immediately**: Don't trust your memory - write it down
+- **Process fleeting notes daily**: Within 1-2 days max
+- **One idea per note**: Atomic notes are easier to connect
+- **Write in your own words**: Paraphrasing ensures understanding
+- **Link generously**: Connections create emergent knowledge
+- **Weekly review**: Process all fleeting notes, review GTD lists
+- **GTD Method**: Capture, Clarify, Organize, Reflect, Engage
+  ([David Allen](https://gettingthingsdone.com/))
+- **Zettelkasten**: Fleeting → Literature → Permanent notes
+  ([Zettelkasten.de](https://zettelkasten.de/introduction/))
 
 ## Setup Summary
 
@@ -648,7 +655,7 @@ Is this correct? (yes/no)
 User: yes
 
 Great! I'll import your vault to OLD_VAULT/ where it will be safely preserved.
-You can migrate files to the PARA folders at your own pace.
+You can migrate files to the Zettelkasten folders at your own pace.
 
 ### Case 3: No Vaults Found (Platform-Aware)
 

@@ -8,7 +8,7 @@ This is a pre-configured Obsidian vault structure designed to work seamlessly
 with Claude Code, enabling you to:
 
 - Use AI as a thinking partner, not just a writing assistant
-- Organize knowledge using the PARA method
+- Organize knowledge using GTD + Zettelkasten methods
 - Maintain version control with Git
 - Access your vault from anywhere (including mobile)
 
@@ -88,16 +88,20 @@ Or use one of the pre-configured commands (in Claude Code):
 
 ```
 claudesidian/
-├── 00_Inbox/           # Temporary capture point for new ideas
-├── 01_Projects/        # Active, time-bound initiatives
-├── 02_Areas/           # Ongoing responsibilities
-├── 03_Resources/       # Reference materials and knowledge base
-├── 04_Archive/         # Completed projects and inactive items
-├── 05_Attachments/     # Images, PDFs, and other files
-├── 06_Metadata/        # Vault configuration and templates
-│   ├── Reference/      # Documentation and guides
-│   └── Templates/      # Reusable note templates
-└── .scripts/           # Helper scripts for automation
+├── 00_GTD/                    # GTD system
+│   ├── _GTD.md                # Main dashboard
+│   ├── 00_Actions/            # Inbox, Next, Recurring, Someday
+│   ├── 01_Projects/           # Personal and Work projects
+│   │   └── _PJM.md            # Project dashboard
+│   └── 02_Reference/          # Non-actionable reference
+├── 01_FleetingNotes/          # Quick captures (process in 1-2 days)
+├── 02_LiteratureNotes/        # Notes from external sources
+├── 03_PermanentNotes/         # Atomic, interconnected ideas
+├── 04_Templates/              # Reusable note templates
+├── Daily/                     # Daily notes and journals
+├── Digital Twin/              # Study topic folder
+├── Morphic/                   # Study topic folder
+└── .scripts/                  # Helper scripts for automation
 ```
 
 ## Key Concepts
@@ -117,34 +121,31 @@ claudesidian/
 - Helps structure and edit content
 - Creates final deliverables
 
-### The PARA Method
+### GTD + Zettelkasten Methods
 
-**Projects**: Have a deadline and specific outcome
+**GTD (Getting Things Done)** - Task and project management:
 
-- Example: "Q4 2025 Marketing Strategy"
-- Create a folder in `01_Projects/`
+- **Inbox**: Capture everything to `00_GTD/00_Actions/Inbox.md`
+- **Next Actions**: Concrete tasks in `00_GTD/00_Actions/Next.md`
+- **Projects**: Multi-step outcomes in `00_GTD/01_Projects/`
+- **Reference**: Non-actionable info in `00_GTD/02_Reference/`
 
-**Areas**: Ongoing without an end date
+**Zettelkasten** - Knowledge building:
 
-- Example: "Health", "Finances", "Team Management"
-- Lives in `02_Areas/`
+- **Fleeting Notes**: Quick captures in `01_FleetingNotes/`
+- **Literature Notes**: Notes from sources in `02_LiteratureNotes/`
+- **Permanent Notes**: Atomic ideas in `03_PermanentNotes/`
 
-**Resources**: Topics of ongoing interest
+**Study Folders** - Dedicated research topics:
 
-- Example: "AI Research", "Writing Tips"
-- Store in `03_Resources/`
-
-**Archive**: Inactive items
-
-- Completed projects with their outputs
-- Old notes no longer relevant
+- Create folders for major areas of study (e.g., `Digital Twin/`, `Morphic/`)
 
 ## Claude Code Commands
 
 Pre-configured AI assistants ready to use:
 
 - `thinking-partner` - Explore ideas through questions
-- `inbox-processor` - Organize your captures
+- `inbox-processor` - Process notes through GTD + Zettelkasten workflow
 - `research-assistant` - Deep dive into topics
 - `daily-review` - End of day reflection
 - `weekly-synthesis` - Find patterns in your week
@@ -182,7 +183,7 @@ customizations:
 - Shows you diffs for each file before updating
 - Preserves your personal notes and customizations
 - Only updates system files (commands, agents, scripts)
-- Never touches your content folders (00_Inbox, 01_Projects, etc.)
+- Never touches your content folders (00_GTD, 01_FleetingNotes, etc.)
 - Provides rollback capability if needed
 
 **Safety features:**
@@ -239,10 +240,10 @@ research projects, documentation archives, or building a knowledge base.
 
 ```bash
 # Save a single article
-npm run firecrawl:scrape -- "https://example.com/article" "03_Resources/Articles"
+npm run firecrawl:scrape -- "https://example.com/article" "02_LiteratureNotes"
 
 # Batch save multiple URLs
-npm run firecrawl:batch -- urls.txt "03_Resources/Research"
+npm run firecrawl:batch -- urls.txt "02_LiteratureNotes"
 ```
 
 **Getting a Firecrawl API key:**
@@ -435,7 +436,8 @@ makes this better for everyone!
 ## Resources
 
 - [Obsidian Documentation](https://help.obsidian.md)
-- [PARA Method](https://fortelabs.com/blog/para/)
+- [Getting Things Done (GTD)](https://gettingthingsdone.com/)
+- [Zettelkasten Method](https://zettelkasten.de/introduction/)
 - [Claude Code Documentation](https://claude.ai/docs)
 
 ## Inspiration

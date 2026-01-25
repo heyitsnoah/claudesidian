@@ -21,78 +21,126 @@ repository.
 - Use `git status` to check for modifications
 - When agents modify files: Always commit those changes
 
-## Folder Structure (PARA Method)
+## Folder Structure (GTD + Zettelkasten)
 
 ```
 vault/
-├── 00_Inbox/           # Temporary capture point
-├── 01_Projects/        # Time-bound initiatives
-├── 02_Areas/           # Ongoing responsibilities
-├── 03_Resources/       # Reference materials
-├── 04_Archive/         # Completed/inactive items
-├── 05_Attachments/     # Images, PDFs, etc.
-│   └── Organized/      # Processed attachments
-└── 06_Metadata/        # Documentation & templates
-    ├── Reference/      # Guides and standards
-    ├── Plans/          # Strategic documents
-    └── Templates/      # Reusable structures
+├── 00_GTD/                    # GTD system
+│   ├── _GTD.md                # Main dashboard
+│   ├── 00_Actions/            # Action lists
+│   │   ├── Inbox.md           # Capture here
+│   │   ├── Next.md            # Next actions
+│   │   ├── Recurring.md       # Regular tasks
+│   │   └── Someday.md         # Future possibilities
+│   ├── 01_Projects/           # Active projects
+│   │   ├── _PJM.md            # Project dashboard
+│   │   ├── Personal/          # Personal projects
+│   │   └── Work/              # Work projects
+│   └── 02_Reference/          # Non-actionable reference
+├── 01_FleetingNotes/          # Quick captures (process in 1-2 days)
+├── 02_LiteratureNotes/        # Notes from external sources
+├── 03_PermanentNotes/         # Atomic, interconnected ideas
+├── 04_Templates/              # Reusable note templates
+├── Daily/                     # Daily notes and journals
+├── Digital Twin/              # Study: Digital Twin technology
+└── Morphic/                   # Study: Morphic programming
 ```
 
-## PARA Method Details
+## GTD Method Details
 
-### Projects (01)
+### Capture
+Collect everything into `00_GTD/00_Actions/Inbox.md` or fleeting notes.
 
-- Time-bound initiatives with clear completion criteria
-- Examples: Writing a paper, developing a presentation
-- Recommended subfolders: Research/, Drafts/, References/, Output/
+### Clarify
+Process each item - what is it and what action is required?
 
-### Areas (02)
+### Organize
+- **Inbox**: `00_GTD/00_Actions/Inbox.md` - Capture everything here
+- **Next Actions**: `00_GTD/00_Actions/Next.md` - Ready to do
+- **Projects**: `00_GTD/01_Projects/` - Personal and Work folders
+- **Someday/Maybe**: `00_GTD/00_Actions/Someday.md` - Future possibilities
+- **Reference**: `00_GTD/02_Reference/` - Non-actionable info
 
-- Ongoing responsibilities without end dates
-- Examples: Health, Finances, Professional Development
-- Create dedicated notes with links to related resources
+### Reflect
+- Daily: Check `_GTD.md` dashboard, process inbox
+- Weekly: Full review using checklist in `_GTD.md`
 
-### Resources (03)
+### Engage
+Work from Next Actions with confidence. Use `_GTD.md` as your starting point.
 
-- Topics of interest for reference
-- Knowledge bases organized by subject
-- Use for information not tied to specific projects
+## Zettelkasten Method Details
 
-### Archive (04)
+### Fleeting Notes (01)
 
-- Completed or inactive items
-- Maintain same folder structure as active sections
-- Review periodically for reactivation
+- Quick captures of ideas, thoughts, observations
+- Temporary - process within 1-2 days
+- Don't overthink - capture first, process later
 
-## Inbox Management
+### Literature Notes (02)
 
-### Core Principles
+- Notes from books, articles, videos, podcasts
+- Always in your own words (paraphrase, don't copy)
+- Include source citations
+- Extract key ideas for permanent notes
 
-- Inbox is temporary, not permanent storage
-- Process weekly using Capture → Process → Organize workflow
-- Maintain <20 items at any time
+### Permanent Notes (03)
 
-### Files to Keep in Inbox
+- **Atomic**: One idea per note
+- **Self-contained**: Understandable without context
+- **Linked**: Connected to other permanent notes
+- **Evergreen**: Timeless, not tied to specific moments
 
-- **CRITICAL**: Files with number prefixes (00-06) stay permanently
-- Recent daily/weekly summaries (last 3 months)
-- Active notes being processed
+### The Zettelkasten Flow
 
-### Processing Workflow
+```
+Capture → Fleeting Note → Literature Note → Permanent Note
+   ↓           ↓               ↓                  ↓
+(quick)   (1-2 days)     (source-based)     (atomic idea)
+```
 
-1. Delete obsolete information
-2. Move relevant material to PARA locations
-3. Convert actions into project tasks
-4. Tag items needing more processing with `#needs-processing`
+## Study Folders
+
+### Digital Twin
+Research and notes on Digital Twin technology - virtual representations of
+physical objects, systems, and processes.
+
+### Morphic
+Research on Morphic programming paradigm - direct-manipulation UI framework
+from Self/Smalltalk.
+
+## Daily Notes Workflow
+
+### Morning
+1. Run `git pull`
+2. Create daily note in `Daily/`
+3. Review fleeting notes for processing
+4. Check active projects and tasks
+
+### During Day
+- Capture ideas to `01_FleetingNotes/`
+- Log tasks and observations to daily note
+- Process literature as you consume content
+
+### Evening
+1. Process fleeting notes
+2. Update project notes
+3. Commit and push changes
+
+### Weekly Review
+1. Process all remaining fleeting notes
+2. Review and update literature notes
+3. Create new permanent notes from insights
+4. Review GTD lists and projects
+5. Archive completed items
 
 ## File Organization Guidelines
 
 ### Naming Conventions
 
-- Daily notes: `YYYY-MM-DD - Topic`
-- Meeting notes: `Meeting - [Topic] - YYYY-MM-DD`
-- Ideas: `Idea - [Brief Description]`
-- Resources: `Resource - [Topic] - [Source]`
+- Daily notes: `YYYY-MM-DD.md`
+- Fleeting notes: `[Brief description].md`
+- Literature notes: `[Source Title] - Notes.md`
+- Permanent notes: `[Clear descriptive title].md`
 
 ### Movement Rules
 
@@ -100,23 +148,6 @@ vault/
 - Verify destination folders exist first
 - Update internal links after moves
 - Add YAML frontmatter when organizing
-
-## Attachments Management
-
-### Organization
-
-- Store all non-text files in `05_Attachments/`
-- Processed files → `05_Attachments/Organized/`
-- Naming: `[RelatedNote]_[Description].[ext]`
-
-### Helper Scripts
-
-```bash
-pnpm attachments:list        # List unprocessed files
-pnpm attachments:organized   # Count organized files
-pnpm attachments:orphans     # Find unreferenced files
-pnpm attachments:update-links # Update links after moving
-```
 
 ## Web Content Workflow
 
@@ -130,7 +161,7 @@ pnpm attachments:update-links # Update links after moving
 
 - Single URL: `pnpm firecrawl:scrape <url> <output>`
 - Batch URLs: `pnpm firecrawl:batch <url1> <url2>`
-- Saves to `00_Inbox/Clippings/` with frontmatter
+- Saves to `01_FleetingNotes/` with frontmatter for processing
 
 ## Writing Style Guidelines
 
@@ -139,101 +170,73 @@ pnpm attachments:update-links # Update links after moving
 - Use `[[WikiLinks]]` for internal references
 - Include YAML frontmatter (dates, tags, status)
 - Consistent Markdown formatting
-- Specific, consistent tags
+- Link generously - connections create value
 
-### Style Preferences
+### Permanent Note Format
 
-- Direct and confident statements
-- Avoid clichéd transitions
-- Let statements stand on their own
-- No unnecessary lead-ins
+```markdown
+---
+created: YYYY-MM-DD
+tags: [topic1, topic2]
+---
+
+# [Clear, descriptive title]
+
+[A single, well-articulated idea in 1-3 paragraphs]
+
+## Related
+
+- [[Related Note 1]]
+- [[Related Note 2]]
+
+## Sources
+
+- [[Literature Note]]
+```
 
 ## AI Assistant Guidelines
 
 ### Before Any Organization
 
 1. Map complete folder structure: `find . -type d | sort`
-2. Document in `06_Metadata/STRUCTURE.md`
-3. Verify all destination folders exist
+2. Verify all destination folders exist
 
 ### Working with Content
 
-- Respect numbered core files (never move 00-06 prefixed files)
+- Respect the Zettelkasten flow (fleeting → literature → permanent)
 - Always use `mv` not `cp` when organizing
 - Preserve and update bidirectional links
 - Add appropriate YAML frontmatter
 
-### Simple Commands Only
+### Processing Notes
 
-- **REQUIRED**: Direct, basic commands without filtering
-- **FORBIDDEN**: Complex regex, piped commands, find with filters
-- Example RIGHT: `ls -1` then manually select files
-- Example WRONG: `ls | grep pattern` or `find . -name "*.png"`
-
-## Daily Workflows
-
-### Start of Day
-
-1. Run `git pull`
-2. Check inbox for items to process
-3. Review active projects
-
-### End of Day
-
-1. Process new inbox items
-2. Commit and push changes
-3. Update project notes
-
-### Weekly Review
-
-1. Process entire inbox
-2. Archive completed projects
-3. Update area notes
-4. Review and consolidate resources
-
-## Project Lifecycle
-
-### Starting a Project
-
-1. Create folder in `01_Projects/[ProjectName]`
-2. Add subfolders: Research/, Drafts/, Output/
-3. Create README with objectives and timeline
-
-### During Project
-
-- Keep all related materials in project folder
-- Link to relevant resources and areas
-- Regular commits to track progress
-
-### Completing a Project
-
-1. Create project summary note
-2. Move entire folder to `04_Archive/`
-3. Update relevant area notes
-4. Commit with completion message
+- Help identify notes ready for promotion
+- Suggest connections between ideas
+- Recommend when to create new permanent notes
+- Respect atomic note principle (one idea per note)
 
 ## Best Practices
 
 ### Organization
 
-- Keep folder structure shallow (max 3 levels)
-- Create subfolders only with 7+ related notes
+- Keep folder structure shallow
 - Use linking over deep nesting
+- Let structure emerge organically
 - Include README in major folders
 
 ### Content Creation
 
 - Capture first, organize later
-- One idea per note
+- One idea per permanent note
+- Write in your own words
 - Link generously
-- Tag consistently
 
 ### Maintenance
 
-- Weekly inbox processing
-- Monthly project reviews
-- Quarterly archive cleanup
+- Process fleeting notes within 1-2 days
+- Weekly review and synthesis
 - Regular git commits
+- Quarterly review of permanent notes
 
 ---
 

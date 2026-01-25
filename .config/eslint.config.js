@@ -17,13 +17,17 @@ export default [
   {
     ignores: [
       '**/*.json',
-      '00_Inbox/**',
-      '01_Projects/**',
-      '02_Areas/**',
-      '03_Resources/**',
-      '04_Archives/**',
-      '05_Attachments/**',
-      '06_Metadata/**',
+      // GTD and Zettelkasten folders
+      '00_GTD/**',
+      '01_FleetingNotes/**',
+      '02_LiteratureNotes/**',
+      '03_PermanentNotes/**',
+      '04_Templates/**',
+      'Daily/**',
+      // Study topic folders
+      'Digital Twin/**',
+      'Morphic/**',
+      // System folders
       'OLD_VAULT/**',
       '.obsidian/**',
       '.trash/**',
