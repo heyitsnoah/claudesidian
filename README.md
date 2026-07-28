@@ -169,6 +169,9 @@ Skills trigger automatically when you describe what you want — e.g. "wrap up
 my day" loads `daily-review`, "open a PR for this" loads `pull-request`. No
 slash command needed.
 
+For guidance on choosing and safely reviewing external skills, MCP servers, and
+plugins, see [Integrations guide](INTEGRATIONS.md).
+
 ### Staying updated with `upgrade`
 
 Claudesidian automatically checks for updates when you start Claude Code and
