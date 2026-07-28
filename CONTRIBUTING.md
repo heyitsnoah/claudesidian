@@ -46,6 +46,23 @@ We use [Semantic Versioning](https://semver.org/):
 3. Ensure all scripts still work
 4. Submit PR with clear description of changes
 
+### Agent-assisted contributions
+
+Agent-assisted changes are welcome when the contributor remains responsible for
+the result. Before opening a pull request:
+
+1. Review the complete diff and remove vault-specific notes, secrets, and local
+   paths.
+2. Run the narrowest relevant tests, then run the full repository checks when
+   practical. Record the commands and results in the PR description.
+3. Confirm the branch is based on the latest default branch and that the PR
+   targets your fork, not the upstream repository directly.
+4. Explain which files were changed and identify any behavior that still needs
+   maintainer review; do not present generated output as independently verified.
+
+Small, reviewable commits are preferred because they make agent-assisted work
+easy to audit, revert, and continue after an interrupted session.
+
 ## Changelog Updates
 
 When contributing, add your changes to CHANGELOG.md under the "Unreleased"

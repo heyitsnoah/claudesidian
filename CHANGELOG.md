@@ -14,6 +14,7 @@ and this project adheres to
   `.claude/vault-config.json`, with backwards-compatible defaults. (#12)
 - Add the cross-agent `signal-log` skill for recording dated observations and
   promoting confirmed recurring patterns into durable principles. (#38)
+- Document review and testing expectations for agent-assisted contributions.
 
 ### Fixed
 
