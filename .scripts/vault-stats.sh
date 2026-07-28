@@ -3,6 +3,10 @@
 # Vault Statistics Script
 # Shows basic stats about your Obsidian vault
 
+CONFIG_SCRIPT="$(dirname "$0")/vault-config.js"
+ATTACHMENTS_DIR=$(node "$CONFIG_SCRIPT" attachments 2>/dev/null || printf '%s' "05_Attachments")
+ORGANIZED_DIR=$(node "$CONFIG_SCRIPT" attachmentsOrganized 2>/dev/null || printf '%s' "05_Attachments/Organized")
+
 echo "=== Vault Statistics ==="
 echo ""
 
@@ -15,8 +19,8 @@ echo "  Archive:   $(find 04_Archive -name "*.md" 2>/dev/null | wc -l)"
 echo ""
 
 echo "📎 Attachments:"
-echo "  Total:     $(find 05_Attachments -type f 2>/dev/null | wc -l)"
-echo "  Organized: $(find 05_Attachments/Organized -type f 2>/dev/null | wc -l)"
+echo "  Total:     $(find "$ATTACHMENTS_DIR" -type f 2>/dev/null | wc -l)"
+echo "  Organized: $(find "$ORGANIZED_DIR" -type f 2>/dev/null | wc -l)"
 echo ""
 
 echo "📊 Total Notes: $(find . -name "*.md" | wc -l)"
