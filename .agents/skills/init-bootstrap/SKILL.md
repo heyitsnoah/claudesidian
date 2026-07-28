@@ -43,7 +43,12 @@ Then generate a customized CLAUDE.md file tailored to their needs.
 
 2. **Check Existing Configuration**
    - Look for existing CLAUDE.md
-   - If exists, ask if they want to update or start fresh
+   - If exists, **never overwrite it implicitly**: show its path and ask whether
+     to keep it unchanged, merge selected sections, or replace it
+   - Before any merge or replacement, create a timestamped backup beside the
+     file (for example, `CLAUDE.md.backup-20250113-143025`) and report the path
+   - If the user does not explicitly choose merge or replace, keep the existing
+     file and write the generated configuration to `CLAUDE.generated.md`
    - Check for CLAUDE-BOOTSTRAP.md template
 
 3. **Gather Vault Information**
@@ -209,8 +214,12 @@ Then generate a customized CLAUDE.md file tailored to their needs.
 7. **Import Existing Vault (if applicable)**
    - If user has existing vault:
      - Create OLD_VAULT folder: `mkdir OLD_VAULT`
-     - Copy entire vault preserving structure:
-       `cp -r [vault-path]/* ./OLD_VAULT/`
+     - Copy the entire vault preserving structure, including `CLAUDE.md` and
+       other dotfiles, while excluding only `.git/` and the source vault's
+       `.claude/` directory. Do not use a wildcard that silently omits dotfiles.
+       Use a copy mode that refuses to replace an existing destination file.
+     - If `OLD_VAULT/CLAUDE.md` already exists, stop and ask before continuing;
+       never replace it during a retry.
      - Copy Obsidian configuration: `cp -r [vault-path]/.obsidian ./`
      - Check for and copy other important files:
        - `.trash/` (Obsidian's trash folder)
@@ -220,6 +229,9 @@ Then generate a customized CLAUDE.md file tailored to their needs.
      - Show summary: "Imported your vault to OLD_VAULT/ (X files, Y folders)"
      - Explain: "Your original structure is preserved in OLD_VAULT. You can
        gradually migrate files to the PARA folders as needed."
+     - After the import, verify that the source and `OLD_VAULT/` both contain
+       the same `CLAUDE.md` (when the source had one) before generating any new
+       configuration. If verification fails, stop and restore from the backup.
 
 8. **Create Supporting Files**
    - Generate initial folder structure if new vault
