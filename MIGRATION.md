@@ -59,6 +59,27 @@ the attachment and clipping scripts.
 Do not remove `OLD_VAULT/` until these checks pass and the backup is stored
 somewhere separate from the destination vault.
 
+## Resume after an interrupted session
+
+An interrupted Claude session does not change the migration state. Resume from
+the destination vault rather than starting the wizard again:
+
+1. Open a terminal in the destination vault and run `git status`.
+2. If the working tree is clean, run `git pull --ff-only` to synchronize the
+   latest checkpoint. Do not pull while another session is editing the vault.
+3. Run `claude --resume` (or the installed `claudesidian` command) to restore
+   the previous Claude session. If no resumable session exists, start `claude`
+   in the same directory and ask it to inspect the latest commit and continue
+   from `MIGRATION.md`.
+4. Check the last migration checkpoint with `git log -1 --oneline` before
+   moving or renaming more notes. Commit each reviewable batch so a later
+   interruption can be resumed without guessing which files were processed.
+
+Do not run `/init-bootstrap` again unless the destination vault was discarded
+and you are intentionally starting over. Re-running bootstrap can recreate
+configuration files and obscure the boundary between imported material and
+the new vault instructions.
+
 ## Rollback
 
 If the result is incorrect, close Obsidian, remove only the new destination
