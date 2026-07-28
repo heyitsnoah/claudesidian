@@ -10,8 +10,14 @@
 
 import fs from 'node:fs'
 import path from 'node:path'
+import { getVaultFolders } from './vault-config.js'
 
-const organizedDir = '05_Attachments/Organized'
+const { attachments, attachmentsOrganized } = getVaultFolders()
+const attachmentsPath = attachments.replaceAll('\\', '/')
+const organizedDir = attachmentsOrganized.replaceAll('\\', '/')
+const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+const attachmentsPattern = escapeRegex(attachmentsPath)
+const organizedPattern = escapeRegex(organizedDir)
 const args = process.argv.slice(2)
 const specificFile = args[0]
 
@@ -69,24 +75,24 @@ walkDir('.', (filepath) => {
       const pattern1 = new RegExp(`!\\[\\[${escapedFile}\\]\\]`, 'g')
       content = content.replace(
         pattern1,
-        `![[05_Attachments/Organized/${filename}]]`,
+        `![[${organizedDir}/${filename}]]`,
       )
 
       // Pattern 2: ![[05_Attachments/filename]] (file in root being moved)
       const pattern2 = new RegExp(
-        `!\\[\\[05_Attachments/${escapedFile}\\]\\]`,
+        `!\\[\\[${attachmentsPattern}/${escapedFile}\\]\\]`,
         'g',
       )
       content = content.replace(
         pattern2,
-        `![[05_Attachments/Organized/${filename}]]`,
+        `![[${organizedDir}/${filename}]]`,
       )
 
       // Pattern 3: [[filename]] without ! (for PDFs and other non-embedded links)
       // Only if not already pointing to Organized
       const pattern3 = new RegExp(`\\[\\[${escapedFile}\\]\\]`, 'g')
       const pattern3Organized = new RegExp(
-        `\\[\\[05_Attachments/Organized/${escapedFile}\\]\\]`,
+        `\\[\\[${organizedPattern}/${escapedFile}\\]\\]`,
         'g',
       )
 
@@ -94,18 +100,18 @@ walkDir('.', (filepath) => {
       if (!pattern3Organized.test(content)) {
         content = content.replace(
           pattern3,
-          `[[05_Attachments/Organized/${filename}]]`,
+          `[[${organizedDir}/${filename}]]`,
         )
       }
 
       // Pattern 4: [[05_Attachments/filename]] without !
       const pattern4 = new RegExp(
-        `\\[\\[05_Attachments/${escapedFile}\\]\\]`,
+        `\\[\\[${attachmentsPattern}/${escapedFile}\\]\\]`,
         'g',
       )
       content = content.replace(
         pattern4,
-        `[[05_Attachments/Organized/${filename}]]`,
+        `[[${organizedDir}/${filename}]]`,
       )
     })
 

@@ -2,6 +2,21 @@
 
 Helper scripts for vault automation and web content capture.
 
+Folder destinations can be customized in `.claude/vault-config.json`:
+
+```json
+{
+  "folders": {
+    "clippings": "00_Inbox/Clippings",
+    "attachments": "05_Attachments",
+    "attachmentsOrganized": "05_Attachments/Organized"
+  }
+}
+```
+
+The capture and attachment-link scripts read these values and fall back to the
+defaults above when the file or a specific setting is missing.
+
 ## Available Scripts
 
 ### Attachment Management

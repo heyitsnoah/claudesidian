@@ -9,6 +9,13 @@
 
 import fs from 'node:fs'
 import path from 'node:path'
+import { getVaultFolders } from './vault-config.js'
+
+const { attachments, attachmentsOrganized } = getVaultFolders()
+const attachmentsPath = attachments.replaceAll('\\', '/')
+const organizedPath = attachmentsOrganized.replaceAll('\\', '/')
+const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+const attachmentsPattern = escapeRegex(attachmentsPath)
 
 const args = process.argv.slice(2)
 
@@ -23,7 +30,7 @@ if (args.length !== 2) {
 }
 
 const [oldName, newName] = args
-const newPath = `05_Attachments/Organized/${newName}`
+const newPath = `${organizedPath}/${newName}`
 
 console.log(`Fixing links: ${oldName} → ${newName}`)
 
@@ -61,7 +68,7 @@ walkDir('.', (filepath) => {
 
     // Pattern 2: ![[05_Attachments/oldname]]
     const pattern2 = new RegExp(
-      `!\\[\\[05_Attachments/${escapedOld}\\]\\]`,
+      `!\\[\\[${attachmentsPattern}/${escapedOld}\\]\\]`,
       'g',
     )
     content = content.replace(pattern2, `![[${newPath}]]`)
@@ -72,7 +79,7 @@ walkDir('.', (filepath) => {
 
     // Pattern 4: [[05_Attachments/oldname]] without !
     const pattern4 = new RegExp(
-      `(?<!!)\\[\\[05_Attachments/${escapedOld}\\]\\]`,
+      `(?<!!)\\[\\[${attachmentsPattern}/${escapedOld}\\]\\]`,
       'g',
     )
     content = content.replace(pattern4, `[[${newPath}]]`)

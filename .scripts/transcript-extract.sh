@@ -2,16 +2,18 @@
 
 # Transcript extraction script for YouTube videos
 # Usage: .scripts/transcript-extract.sh <youtube-url> [output-path]
-# Default output: 00_Inbox/Clippings/
+# Default output comes from .claude/vault-config.json when available.
 
 set -e
 
 URL="$1"
-OUTPUT_PATH="${2:-00_Inbox/Clippings/}"
+CONFIG_SCRIPT="$(dirname "$0")/vault-config.js"
+DEFAULT_OUTPUT=$(node "$CONFIG_SCRIPT" clippings 2>/dev/null || printf '%s' "00_Inbox/Clippings")
+OUTPUT_PATH="${2:-$DEFAULT_OUTPUT}"
 
 if [ -z "$URL" ]; then
     echo "Usage: $0 <youtube-url> [output-path]"
-    echo "Default output path: 00_Inbox/Clippings/"
+    echo "Default output path: $DEFAULT_OUTPUT"
     exit 1
 fi
 

@@ -5,8 +5,8 @@
 # Automatically generates filenames based on page titles and dates
 # Requires: FIRECRAWL_API_KEY environment variable
 
-# Default output directory
-OUTPUT_DIR="00_Inbox/Clippings/"
+# Default output directory (overridden by .claude/vault-config.json when set)
+OUTPUT_DIR=""
 URLS=()
 
 # Parse arguments
@@ -23,9 +23,14 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
+if [ -z "$OUTPUT_DIR" ]; then
+    CONFIG_SCRIPT="$(dirname "$0")/vault-config.js"
+    OUTPUT_DIR=$(node "$CONFIG_SCRIPT" clippings 2>/dev/null || printf '%s' "00_Inbox/Clippings")
+fi
+
 if [ ${#URLS[@]} -eq 0 ]; then
     echo "Usage: $0 [-o|--output-dir <dir>] <url1> <url2> ..."
-    echo "Default output directory: 00_Inbox/Clippings/"
+    echo "Default output directory: $OUTPUT_DIR"
     echo ""
     echo "Options:"
     echo "  -o, --output-dir <dir>  Specify custom output directory"

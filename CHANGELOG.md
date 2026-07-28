@@ -8,6 +8,11 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- Make clipping and attachment destinations configurable through
+  `.claude/vault-config.json`, with backwards-compatible defaults. (#12)
+
 ## [0.15.1] - 2026-04-11
 
 ### Fixed

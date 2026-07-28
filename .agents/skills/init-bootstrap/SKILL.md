@@ -178,6 +178,11 @@ Then generate a customized CLAUDE.md file tailored to their needs.
          "geminiVision": true,
          "firecrawl": false
        },
+       "folders": {
+         "clippings": "00_Inbox/Clippings",
+         "attachments": "05_Attachments",
+         "attachmentsOrganized": "05_Attachments/Organized"
+       },
        "projects": ["Book - Productivity", "SaaS App"],
        "areas": ["Newsletter", "Health"],
        "importedAt": "2025-01-13",
@@ -198,6 +203,8 @@ Then generate a customized CLAUDE.md file tailored to their needs.
      - Create area folders in 02_Areas/
      - Create resource topics in 03_Resources/
      - Add README files explaining each project/area
+     - Ask whether the default clipping and attachment paths should be changed;
+       save confirmed values under `folders` in `.claude/vault-config.json`
 
 7. **Import Existing Vault (if applicable)**
    - If user has existing vault:
