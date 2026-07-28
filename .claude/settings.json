@@ -5,11 +5,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ -f FIRST_RUN ] && echo '{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"\\n\\n# 🚀 Welcome to Claudesidian!\\n\\n**This appears to be your first time using this vault.**\\n\\n## Quick Start\\n\\nRun the setup wizard:\\n\\n⬇\\n/init-bootstrap\\n⬆\\n\\n## What this will do:\\n\\n✅ Set up your personalized configuration\\n✅ Disconnect from the original repository\\n✅ Help you import any existing Obsidian vault\\n✅ Configure your preferred workflow\\n✅ Create your PARA folder structure\\n\\nThe setup wizard will guide you through everything!\\n\\n\"}}' || true"
+            "command": "node .scripts/session-start.js"
           },
           {
             "type": "command",
-            "command": "npm run check-updates --silent 2>/dev/null || true"
+            "command": "npm run check-updates --silent"
           }
         ]
       }

@@ -13,6 +13,11 @@ and this project adheres to
 - Make clipping and attachment destinations configurable through
   `.claude/vault-config.json`, with backwards-compatible defaults. (#12)
 
+### Fixed
+
+- Run SessionStart hooks through cross-platform Node scripts instead of Bash-only
+  commands, so startup checks work on Windows as well as Unix-like systems. (#26)
+
 ## [0.15.1] - 2026-04-11
 
 ### Fixed
