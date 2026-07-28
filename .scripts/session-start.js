@@ -1,9 +1,12 @@
 import { existsSync } from 'node:fs'
-import { join } from 'node:path'
+import { join, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const projectDir = process.env.CLAUDE_PROJECT_DIR || process.cwd()
+export function getFirstRunContext(projectDir) {
+  if (!existsSync(join(projectDir, 'FIRST_RUN'))) {
+    return null
+  }
 
-if (existsSync(join(projectDir, 'FIRST_RUN'))) {
   const additionalContext = `
 
 # 🚀 Welcome to Claudesidian!
@@ -30,6 +33,17 @@ The setup wizard will guide you through everything!
 
 `
 
+  return additionalContext
+}
+
+function emitSessionStartContext() {
+  const projectDir = process.env.CLAUDE_PROJECT_DIR || process.cwd()
+  const additionalContext = getFirstRunContext(projectDir)
+
+  if (!additionalContext) {
+    return
+  }
+
   console.log(
     JSON.stringify({
       hookSpecificOutput: {
@@ -38,4 +52,11 @@ The setup wizard will guide you through everything!
       },
     }),
   )
+}
+
+if (
+  process.argv[1] &&
+  resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+) {
+  emitSessionStartContext()
 }
