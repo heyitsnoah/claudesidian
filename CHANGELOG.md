@@ -8,6 +8,11 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- Use a Node-based skill discovery hook so prompt suggestions work on Windows
+  without requiring Bash.
+
 ### Added
 
 - Make clipping and attachment destinations configurable through
