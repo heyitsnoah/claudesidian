@@ -49,4 +49,3 @@ Before installing an external skill, MCP server, or plugin:
 
 Remove unused integrations promptly. A smaller tool surface is easier to audit
 and makes agent behavior easier to understand.
-
