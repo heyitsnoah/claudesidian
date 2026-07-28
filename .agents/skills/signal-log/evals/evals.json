@@ -1,0 +1,23 @@
+{
+  "skill_name": "signal-log",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I noticed that I make better design decisions after writing a rough draft. Please log this under work in SIGNAL_LOG.md.",
+      "expected_output": "Append one dated work observation in the required format without changing other files.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Review my signal log and tell me which observations recur across domains. Suggest candidate principles, but do not promote anything yet.",
+      "expected_output": "Group recurring observations, distinguish evidence from hypotheses, cite dates/domains, and wait for confirmation.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "This is a principle-shaped lesson: protect a quiet hour before opening chat. Add it to the log file I specify, /tmp/my-signals.md, and show me the exact entry.",
+      "expected_output": "Use the specified file, preserve its contents, append a principle-marked dated entry, and report the exact line and path.",
+      "files": []
+    }
+  ]
+}
