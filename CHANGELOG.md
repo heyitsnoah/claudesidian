@@ -14,6 +14,8 @@ and this project adheres to
   without requiring Bash.
 - Keep transcript subtitle downloads in a temporary directory so stale or
   unrelated `*.json3` files in the vault are never processed or deleted.
+- Encode Firecrawl URLs as JSON values and surface failed HTTP requests instead
+  of silently treating them as empty captures.
 
 ### Added
 

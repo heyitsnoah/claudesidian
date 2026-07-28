@@ -70,14 +70,16 @@ for URL in "${URLS[@]}"; do
     # Make the API call and save to temp file
     TEMP_FILE=$(mktemp)
     
-    curl -s -X POST https://api.firecrawl.dev/v1/scrape \
+    REQUEST_BODY=$(jq -nc --arg url "$URL" '{url: $url, formats: ["markdown"], onlyMainContent: true}')
+    if ! curl -fsS -X POST https://api.firecrawl.dev/v1/scrape \
       -H "Authorization: Bearer $FIRECRAWL_API_KEY" \
       -H "Content-Type: application/json" \
-      -d "{
-        \"url\": \"$URL\",
-        \"formats\": [\"markdown\"],
-        \"onlyMainContent\": true
-      }" > "$TEMP_FILE"
+      -d "$REQUEST_BODY" > "$TEMP_FILE"; then
+        echo "  âœ— Firecrawl request failed"
+        rm -f "$TEMP_FILE"
+        ((FAIL_COUNT++))
+        continue
+    fi
     
     # Extract markdown and title
     MARKDOWN=$(jq -r '.data.markdown // empty' "$TEMP_FILE")
