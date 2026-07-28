@@ -12,6 +12,8 @@ and this project adheres to
 
 - Use a Node-based skill discovery hook so prompt suggestions work on Windows
   without requiring Bash.
+- Keep transcript subtitle downloads in a temporary directory so stale or
+  unrelated `*.json3` files in the vault are never processed or deleted.
 
 ### Added
 

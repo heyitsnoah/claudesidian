@@ -6,6 +6,12 @@
 
 set -e
 
+TEMP_DIR="$(mktemp -d)"
+cleanup() {
+    rm -rf "$TEMP_DIR"
+}
+trap cleanup EXIT
+
 URL="$1"
 CONFIG_SCRIPT="$(dirname "$0")/vault-config.js"
 DEFAULT_OUTPUT=$(node "$CONFIG_SCRIPT" clippings 2>/dev/null || printf '%s' "00_Inbox/Clippings")
@@ -34,7 +40,7 @@ echo "🆔 Video ID: $VIDEO_ID"
 
 # Try to extract captions first (fastest method)
 echo "🎯 Attempting to extract captions..."
-if yt-dlp --skip-download --write-subs --write-auto-subs --sub-langs 'en.*' --sub-format json3 -o '%(id)s.%(ext)s' "$URL"; then
+if yt-dlp --skip-download --write-subs --write-auto-subs --sub-langs 'en.*' --sub-format json3 -P "$TEMP_DIR" -o '%(id)s.%(ext)s' "$URL"; then
     echo "✅ Captions extracted successfully"
     
     # Convert to markdown
@@ -54,12 +60,9 @@ if yt-dlp --skip-download --write-subs --write-auto-subs --sub-langs 'en.*' --su
 EOF
 
     # Process JSON3 captions to clean text
-    jq -r '.events[] | select(.segs) | .segs | map(.utf8) | join("")' *.json3 | \
+    jq -r '.events[] | select(.segs) | .segs | map(.utf8) | join("")' "$TEMP_DIR"/*.json3 | \
     sed -E 's/\s+/ /g; s/♪//g; s/^\s*//; s/\s*$//' | \
     grep -v '^$' >> "$FILENAME"
-    
-    # Cleanup temporary files
-    rm -f *.json3
     
     echo "✅ Transcript saved to: $FILENAME"
     echo "📝 $(wc -l < "$FILENAME") lines extracted"
