@@ -59,6 +59,9 @@ This will:
 - Optionally configure Firecrawl for web research
 - Initialize Git for version control
 
+For a staged migration with backup, link validation, attachment checks, and
+rollback guidance, see [Migrating an Existing Obsidian Vault](MIGRATION.md).
+
 ### 3. Open in Obsidian (Optional but Recommended)
 
 - Download [Obsidian](https://obsidian.md)
